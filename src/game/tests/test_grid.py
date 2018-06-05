@@ -1,5 +1,5 @@
 import unittest
-from ..start import init_grid, create_grid_string
+from ..start import init_grid, grid_to_string
 
 
 class TestGridMethods(unittest.TestCase):
@@ -21,10 +21,9 @@ class TestGridMethods(unittest.TestCase):
             i += 1
         self.assertEqual(nb_places, 16)
 
-    def test_creat_grid_string_should_create_a_fixed_sized_string(self):
+    def test_grid_to_string_should_create_a_fixed_string(self):
         grid = init_grid(4)
-        grid_display = create_grid_string(grid)
-
+        grid_display = grid_to_string(grid)
         reference_display = """    A   B   C   D
  1  .   .   .   .  
  2  .   .   .   .  
