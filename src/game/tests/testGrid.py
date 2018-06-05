@@ -4,15 +4,15 @@ from ..start import init_grid, creat_grid_string
 
 class TestGridMethods(unittest.TestCase):
 
-    def test_height_4(self):
+    def test_init_grid_should_render_the_correct_amount_of_rows(self):
         grid = init_grid(4)
         self.assertEqual(len(grid), 4)
 
-    def test_width_4(self):
+    def test_init_grid_should_render_the_correct_amount_of_columns(self):
         grid = init_grid(4)
         self.assertEqual(len(grid[0]), 4)
 
-    def test_grid_void(self):
+    def test_init_grid_should_fill_a_matrix_with_dots(self):
         grid = init_grid(4)
         i = 0
         nb_places = 0
@@ -21,12 +21,12 @@ class TestGridMethods(unittest.TestCase):
             i += 1
         self.assertEqual(nb_places, 16)
 
-    def test_grid_display(self):
+    def test_creat_grid_string_should_create_a_fixed_sized_string(self):
         grid = init_grid(4)
         grid_display = creat_grid_string(grid)
         self.assertEqual(len(grid_display), 68)
 
-    def test_grid_display_lines(self):
+    def test_creat_grid_string_should_create_a_string_with_4_returns(self):
         grid = init_grid(4)
         grid_display = creat_grid_string(grid)
         self.assertEqual(grid_display.count('\n'), 4)
