@@ -13,11 +13,17 @@ BIN = docker run \
 install: ## Install docker environnement
 	docker build --tag=quarto-python .
 
+install-local:
+	pip install -r requirements.txt
+
 run: ## Start the game
 	 $(BIN) python ./src/quarto.py
 
 test: ## Test the code
-	$(BIN) python3 -m unittest ./src/test
+	$(BIN) python3 -m unittest discover
+
+test-local:
+	python3 -m unittest discover
 
 lint: ## Check the code syntax and rules
 	$(BIN) pycodestyle /code --max-line-length=150

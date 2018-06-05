@@ -24,12 +24,14 @@ class TestGridMethods(unittest.TestCase):
     def test_creat_grid_string_should_create_a_fixed_sized_string(self):
         grid = init_grid(4)
         grid_display = create_grid_string(grid)
-        self.assertEqual(len(grid_display), 98)
 
-    def test_creat_grid_string_should_create_a_string_with_5_returns(self):
-        grid = init_grid(4)
-        grid_display = create_grid_string(grid)
-        self.assertEqual(grid_display.count('\n'), 5)
+        reference_display = """    A   B   C   D
+ 1  .   .   .   .  
+ 2  .   .   .   .  
+ 3  .   .   .   .  
+ 4  .   .   .   .  
+"""  # noqa
+        self.assertEqual(grid_display, reference_display)
 
 
 if __name__ == '__main__':

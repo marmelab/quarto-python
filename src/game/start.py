@@ -91,22 +91,10 @@ def select_player_string(player_name, selected):
     return player_name
 
 
-def display_grid(grid):
-    print(create_grid_string(grid))
-
-
-def display_pieces(remaining_pieces, game_turn):
-    print(create_pieces_string(remaining_pieces, game_turn))
-
-
-def display_players(game_turn):
-    print(create_players_string(game_turn))
-
-
 def display_game(grid, remaining_pieces, game_turn):
     print()
-    display_grid(grid)
+    print(create_grid_string(grid))
     print()
-    display_players(game_turn)
+    print(create_players_string(game_turn))
     print()
-    display_pieces(remaining_pieces, game_turn)
+    print(create_pieces_string(remaining_pieces, game_turn))
