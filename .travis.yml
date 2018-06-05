@@ -7,3 +7,7 @@ python: "3.5"
 install: make install-local
 
 script: make test-local
+
+branches:
+  only:
+    - master
