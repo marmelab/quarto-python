@@ -1,5 +1,5 @@
 import unittest
-from ..start import init_grid, creat_grid_string
+from ..start import init_grid, create_grid_string
 
 
 class TestGridMethods(unittest.TestCase):
@@ -23,13 +23,13 @@ class TestGridMethods(unittest.TestCase):
 
     def test_creat_grid_string_should_create_a_fixed_sized_string(self):
         grid = init_grid(4)
-        grid_display = creat_grid_string(grid)
-        self.assertEqual(len(grid_display), 68)
+        grid_display = create_grid_string(grid)
+        self.assertEqual(len(grid_display), 98)
 
-    def test_creat_grid_string_should_create_a_string_with_4_returns(self):
+    def test_creat_grid_string_should_create_a_string_with_5_returns(self):
         grid = init_grid(4)
-        grid_display = creat_grid_string(grid)
-        self.assertEqual(grid_display.count('\n'), 4)
+        grid_display = create_grid_string(grid)
+        self.assertEqual(grid_display.count('\n'), 5)
 
 
 if __name__ == '__main__':
