@@ -2,7 +2,7 @@ import unittest
 from ..start import init_remaining_pieces, create_pieces_string, init_game_turn
 
 
-class TestGridMethods(unittest.TestCase):
+class TestPiecesMethods(unittest.TestCase):
 
     def test_init_remaining_pieces_should_return_16_item_array(self):
         remaining_pieces = init_remaining_pieces()
