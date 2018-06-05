@@ -1,0 +1,9 @@
+# https://travis-ci.com/marmelab/quarto-python
+
+language: python
+
+python: "3"
+
+install: make install-local
+
+script: make test-local
