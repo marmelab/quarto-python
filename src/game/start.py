@@ -95,3 +95,4 @@ def display_game(game_state):
     print(players_to_string(game_state.game_turn))
     print()
     print(pieces_to_string(game_state.remaining_pieces, game_state.game_turn))
+    

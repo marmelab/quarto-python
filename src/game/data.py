@@ -1,9 +1,9 @@
 class Piece:
     """Definition of a game piece by 4 characteristics:
-    - RoundShape
-    - BigSize
-    - LightColor
-    - TopHole"""
+    - RoundShape [True/False]
+    - BigSize [True/False]
+    - LightColor [True/False]
+    - TopHole [True/False]"""
 
     def __init__(self):
         self.round_shape = True
@@ -34,8 +34,8 @@ class Piece:
 
 class GameTurn:
     """Definition of a turn of game:
-    - player_one_active is False when it's player 2 turn
-    - selected_piece has 0 when no pice is selected yet"""
+    - player_one_active [True/False] It is False when it's player 2 turn
+    - selected_piece [between 0 to 16] It has 0 when no piece is selected yet"""
 
     def __init__(self):
         self.player_one_active = True
@@ -44,30 +44,33 @@ class GameTurn:
 
 class GameState:
     """Definition of all data of the game at an instant:
-    - grid
-    - remaining_pieces
-    - game_turn"""
+    - grid [2 dimension list]
+    - remaining_pieces [list of numbers (from 1 to 16)]
+    - game_turn [GameTurn]"""
 
-    def __init__(self, parameter=""):
-        self.grid = GameState.init_grid()
-        self.remaining_pieces = GameState.init_remaining_pieces()
-        self.game_turn = GameState.init_game_turn()
+    grid_size = 4
+    pieces_number = 16
+
+    def __init__(self, initial_state=""):
+        self.grid = self.init_grid()
+        self.remaining_pieces = self.init_remaining_pieces()
+        self.game_turn = GameTurn()
         self.message = ""
-        if type(parameter) is dict:
-            self.load_state(parameter)
+        if type(initial_state) is dict:
+            self.load_state(initial_state)
 
-    def load_state(self, parameter):
+    def load_state(self, initial_state):
         try:
-            for key, val in parameter["grid"].items():
+            for key, val in initial_state["grid"].items():
                 self.place_piece(key, val)
 
-            self.game_turn.player_one_active = parameter["turn"]["player"] == 1
-            self.game_turn.selected_piece = parameter["turn"]["selected"]
+            self.game_turn.player_one_active = initial_state["turn"]["player"] == 1
+            self.game_turn.selected_piece = initial_state["turn"]["selected"]
         except:
             self.message = "[The state to load is not valid] : Ignored"
-            self.grid = GameState.init_grid()
-            self.remaining_pieces = GameState.init_remaining_pieces()
-            self.game_turn = GameState.init_game_turn()
+            self.grid = self.init_grid()
+            self.remaining_pieces = self.init_remaining_pieces()
+            self.game_turn = GameTurn()
 
     def place_piece(self, position, piece_id):
         x, y = get_coordinates(position)
@@ -77,41 +80,35 @@ class GameState:
         else:
             raise ValueError('Unvalid piece id')
 
-    @staticmethod
-    def init_grid(grid_size=4):
+    def init_grid(self):
         grid = []
         i = 0
-        while i < grid_size:
+        while i < GameState.grid_size:
             grid.append([])
             j = 0
-            while j < grid_size:
+            while j < GameState.grid_size:
                 grid[i].append('.')
                 j += 1
             i += 1
         return grid
 
-    @staticmethod
-    def init_remaining_pieces(pieces_number=16):
+    def init_remaining_pieces(self):
         list_pieces = []
         i = 0
-        while i < pieces_number:
+        while i < GameState.pieces_number:
             i += 1
             list_pieces.append(i)
         return list_pieces
 
-    @staticmethod
-    def init_game_turn():
-        game_turn = GameTurn()
-        return game_turn
-
 
 def get_coordinates(position):
+    """Convert a postion of format 'A3' into coodinates x= 0 and y = 2 in the grid"""
     x = 0
     y = 0
     if len(position) == 2:
         x = ord(position[0]) - 65
         y = int(position[1]) - 1
-        if y < 0 or y > 3 or x < 0 or x > 3:
+        if y < 0 or y >= GameState.grid_size or x < 0 or x >= GameState.grid_size:
             raise ValueError('Unvalid coordinate')
     else:
         raise ValueError('Unvalid coordinate')
