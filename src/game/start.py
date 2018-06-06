@@ -40,7 +40,7 @@ def init_game_turn():
     return game_turn
 
 
-def create_grid_string(grid):
+def grid_to_string(grid):
     display_string = '    A   B   C   D\n'
     i = 1
     for line in grid:
@@ -58,34 +58,29 @@ def create_grid_string(grid):
     return display_string
 
 
-def create_pieces_string(remaining_pieces, game_turn):
+def pieces_to_string(remaining_pieces, game_turn):
     display_string = 'Remaining pieces :\n'
     i = 1
     for piece in remaining_pieces:
         display_string += ' '
-        display_string += select_piece_string(piece, game_turn)
+        display_string += selected_piece_to_string(piece, game_turn)
         display_string += ' '
     return display_string
 
 
-def select_piece_string(piece_number, game_turn):
+def selected_piece_to_string(piece_number, game_turn):
     if game_turn.selected_piece == piece_number:
         return "[" + str(piece_number) + "]"
-    else:
-        return str(piece_number)
+    return str(piece_number)
 
 
-def create_players_string(game_turn):
-    display_string = ''
-    player_1 = 'Player 1'
-    player_2 = 'Player 2'
-    player_1 = select_player_string(player_1, game_turn.player_one_active)
-    player_2 = select_player_string(player_2, not game_turn.player_one_active)
-    display_string = player_1 + "     " + player_2
-    return display_string
+def players_to_string(game_turn):
+    player_1 = selected_player_to_string('Player 1', game_turn.player_one_active)
+    player_2 = selected_player_to_string('Player 2', not game_turn.player_one_active)
+    return player_1 + "     " + player_2
 
 
-def select_player_string(player_name, selected):
+def selected_player_to_string(player_name, selected):
     if selected:
         player_name = "=> " + player_name + " <="
     return player_name
@@ -93,8 +88,8 @@ def select_player_string(player_name, selected):
 
 def display_game(grid, remaining_pieces, game_turn):
     print()
-    print(create_grid_string(grid))
+    print(grid_to_string(grid))
     print()
-    print(create_players_string(game_turn))
+    print(players_to_string(game_turn))
     print()
-    print(create_pieces_string(remaining_pieces, game_turn))
+    print(pieces_to_string(remaining_pieces, game_turn))
