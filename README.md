@@ -1,7 +1,6 @@
 # quarto-python
 Quarto game using python for console
 
-```
 ## Install
 
 Install docker image
