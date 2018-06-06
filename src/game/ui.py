@@ -52,7 +52,6 @@ class UIRender:
                 display_string += position
                 display_string += '  '
             display_string += '\n'
-            #i += 1
         return display_string
 
     def pieces_to_string(self, remaining_pieces, game_turn):

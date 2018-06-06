@@ -16,12 +16,12 @@ class Game:
     def start(self):
         pieces_list = Piece.create_pieces_list()
         game_state = State()
-        
+
         initial_state = ""
-        try :
+        try:
             initial_state = self.parse_state_from_args(sys.argv)
         except ValueError as e:
-            game_state.message = e.args[0]     
+            game_state.message = e.args[0]
 
         if type(initial_state) is dict:
             game_state.load_state(initial_state)
@@ -50,7 +50,7 @@ class Game:
                 parameter = arg
         try:
             parameter = json.loads(parameter)
-        except json.JSONDecodeError:
+        except (json.decoder.JSONDecodeError, json.JSONDecodeError):
             parameter = ""
             raise ValueError("[The state to load is not wellformed] : Ignored")
 

@@ -20,7 +20,11 @@ class State:
                 self.place_piece(key, val)
 
             self.game_turn.player_one_active = initial_state["turn"]["player"] == 1
-            self.game_turn.selected_piece = initial_state["turn"]["selected"]
+            selected_piece = initial_state["turn"]["selected"]
+            if self.remaining_pieces.count(selected_piece) == 1:
+                self.game_turn.selected_piece = selected_piece
+            else:
+                raise ValueError
         except (ValueError, TypeError):
             self.message = "[The state to load is not valid] : Ignored"
             self.grid = self.init_grid()
