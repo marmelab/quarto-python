@@ -21,7 +21,7 @@ class TestGridMethods(unittest.TestCase):
             i += 1
         self.assertEqual(nb_places, 16)
 
-    def test_grid_to_string_should_create_a_fixed_string(self):
+    def test_grid_to_string_should_create_the_reference_string(self):
         grid = init_grid(4)
         grid_display = grid_to_string(grid)
         reference_display = """    A   B   C   D

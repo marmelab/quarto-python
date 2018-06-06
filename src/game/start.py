@@ -71,18 +71,13 @@ def pieces_to_string(remaining_pieces, game_turn):
 def selected_piece_to_string(piece_number, game_turn):
     if game_turn.selected_piece == piece_number:
         return "[" + str(piece_number) + "]"
-    else:
-        return str(piece_number)
+    return str(piece_number)
 
 
 def players_to_string(game_turn):
-    display_string = ''
-    player_1 = 'Player 1'
-    player_2 = 'Player 2'
-    player_1 = selected_player_to_string(player_1, game_turn.player_one_active)
-    player_2 = selected_player_to_string(player_2, not game_turn.player_one_active)
-    display_string = player_1 + "     " + player_2
-    return display_string
+    player_1 = selected_player_to_string('Player 1', game_turn.player_one_active)
+    player_2 = selected_player_to_string('Player 2', not game_turn.player_one_active)
+    return player_1 + "     " + player_2
 
 
 def selected_player_to_string(player_name, selected):

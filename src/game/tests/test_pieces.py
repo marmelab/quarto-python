@@ -20,7 +20,7 @@ class TestPiecesMethods(unittest.TestCase):
         pieces_display = pieces_to_string(pieces_list, game_turn)
         self.assertEqual(pieces_display.count("]"), 0)
 
-    def test_pieces_to_string_shouldnt_render_void_string(self):
+    def test_pieces_to_string_shouldnt_render_empty_string(self):
         pieces_list = init_remaining_pieces()
         game_turn = init_game_turn()
         pieces_display = pieces_to_string(pieces_list, game_turn)
