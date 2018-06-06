@@ -12,7 +12,7 @@ class TestPlayersMethods(unittest.TestCase):
         game_turn = init_game_turn()
         self.assertEqual(game_turn.selected_piece, 0)
 
-    def test_players_to_string_should_create_the reference_string(self):
+    def test_players_to_string_should_create_the_reference_string(self):
         game_turn = init_game_turn()
         players_display = players_to_string(game_turn)
         reference_string = "=> Player 1 <=     Player 2"
