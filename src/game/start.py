@@ -125,7 +125,7 @@ def selected_player_to_string(player_name, selected):
     return player_name
 
 
-def cls():
+def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
