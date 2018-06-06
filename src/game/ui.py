@@ -35,7 +35,6 @@ class UIRender:
         # basic remove of the piece to end correctly the "while", but will be replace by real placement for next story
         game_state.remaining_pieces.remove(game_state.game_turn.selected_piece)
 
-
     def grid_to_string(self, grid):
         display_string = '    A   B   C   D\n'
         i = 1

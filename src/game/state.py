@@ -1,6 +1,7 @@
 from .turn import Turn
 from .tools import GRID_SIZE, PIECES_NUMBER, get_coordinates
 
+
 class State:
     """Definition of all data of the game at an instant:
     - grid [2 dimension list]

@@ -15,4 +15,3 @@ def get_coordinates(position):
         raise ValueError('Coordinate is out of the grid')
 
     return x, y
-

@@ -56,4 +56,3 @@ class Game:
             error_message = "[The state to load is not wellformed] : Ignored"
 
         return parameter, error_message
-
