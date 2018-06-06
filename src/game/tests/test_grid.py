@@ -1,16 +1,17 @@
 import unittest
 from ..start import GameState, grid_to_string
+from ..data import GRID_SIZE
 
 
 class TestGridMethods(unittest.TestCase):
 
     def test_init_grid_should_render_the_correct_amount_of_rows(self):
         grid = GameState().init_grid()
-        self.assertEqual(len(grid), GameState.grid_size)
+        self.assertEqual(len(grid), GRID_SIZE)
 
     def test_init_grid_should_render_the_correct_amount_of_columns(self):
         grid = GameState().init_grid()
-        self.assertEqual(len(grid[0]), GameState.grid_size)
+        self.assertEqual(len(grid[0]), GRID_SIZE)
 
     def test_init_grid_should_fill_a_matrix_with_dots(self):
         grid = GameState().init_grid()
