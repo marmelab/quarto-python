@@ -1,6 +1,7 @@
 import sys
 import getopt
 import json
+import os
 from .data import Piece, GameTurn, GameState, PIECES_NUMBER
 
 
@@ -11,14 +12,42 @@ def start_game():
     pieces_list = Piece.create_pieces_list()
 
     game_state = GameState(parameter)
-    if len(game_state.message) > 0:
-        error_message = game_state.message
-
     if len(error_message) > 0:
-        print(error_message)
-        print("""Valid sample : --state='{"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}}'""")
+        game_state.message = error_message
 
-    display_game(game_state)
+    if (len(game_state.message) > 0):
+        game_state.message += """\nValid sample : --state='{"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}}'"""
+
+    while len(game_state.remaining_pieces) > 0:
+        display_game(game_state)
+        prompt_piece_selection(game_state)
+        game_state.swich_player()
+        display_game(game_state)
+        prompt_piece_location(game_state)
+
+
+def prompt_piece_selection(game_state):
+    value_ok = False
+    while not value_ok:
+        piece = input("Choose the next piece of the opponent : ")
+        try:
+            piece = int(piece)
+            valid_piece = game_state.check_piece_validity(piece)
+            if not valid_piece:
+                game_state.message = "You must choose a number available in the list"
+                display_game(game_state)
+            else:
+                value_ok = True
+        except ValueError:
+            game_state.message = "You have to type number between 1 and " + str(PIECES_NUMBER)
+            display_game(game_state)
+    game_state.game_turn.selected_piece = piece
+
+
+def prompt_piece_location(game_state):
+    position = input("Choose the position to place your piece : ")
+    # basic remove of the piece to end correctly the "while", but will be replace by real placement for next story
+    game_state.remaining_pieces.remove(game_state.game_turn.selected_piece)
 
 
 def get_state_parameter(argv):
@@ -90,10 +119,19 @@ def selected_player_to_string(player_name, selected):
     return player_name
 
 
+def cls():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
 def display_game(game_state):
+    cls()
     print()
     print(grid_to_string(game_state.grid))
     print()
     print(players_to_string(game_state.game_turn))
     print()
     print(pieces_to_string(game_state.remaining_pieces, game_state.game_turn))
+    print()
+    if len(game_state.message) > 0:
+        print(game_state.message)
+        game_state.message = ""

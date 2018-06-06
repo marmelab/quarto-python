@@ -1,6 +1,6 @@
 import unittest
-from ..start import GameState, GameTurn, pieces_to_string
-from ..data import PIECES_NUMBER
+from ..start import pieces_to_string
+from ..data import GameState, GameTurn, PIECES_NUMBER
 
 
 class TestPiecesMethods(unittest.TestCase):
@@ -26,6 +26,16 @@ class TestPiecesMethods(unittest.TestCase):
         game_turn = GameTurn()
         pieces_display = pieces_to_string(pieces_list, game_turn)
         self.assertGreater(len(pieces_display), 0)
+
+    def test_pieces_selection_fail_when_number_not_in_remaining_list(self):
+        game_state = GameState()
+        game_state.remaining_pieces.remove(7)
+        self.assertEqual(game_state.check_piece_validity(7), False)
+
+    def test_pieces_selection_fail_when_number_in_remaining_list(self):
+        game_state = GameState()
+        game_state.remaining_pieces.remove(7)
+        self.assertEqual(game_state.check_piece_validity(8), True)
 
 
 if __name__ == '__main__':

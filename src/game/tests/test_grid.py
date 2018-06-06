@@ -1,5 +1,5 @@
 import unittest
-from ..start import GameState, grid_to_string, get_state_parameter
+from ..start import grid_to_string, get_state_parameter
 from ..data import GRID_SIZE, GameState
 
 

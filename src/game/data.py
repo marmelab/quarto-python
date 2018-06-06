@@ -88,6 +88,12 @@ class GameState:
     def init_remaining_pieces(self):
         return [i + 1 for i in range(PIECES_NUMBER)]
 
+    def check_piece_validity(self, piece):
+        return self.remaining_pieces.count(piece) == 1
+
+    def swich_player(self):
+        self.game_turn.player_one_active = not self.game_turn.player_one_active
+
 
 def get_coordinates(position):
     """Convert a postion of format 'A3' into coodinates x= 0 and y = 2 in the grid"""

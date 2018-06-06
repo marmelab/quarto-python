@@ -1,6 +1,6 @@
 import unittest
-from ..start import GameState, grid_to_string, get_state_parameter
-from ..data import GRID_SIZE
+from ..start import grid_to_string, get_state_parameter
+from ..data import GameState, GRID_SIZE
 
 
 class TestArgumentsMethods(unittest.TestCase):
