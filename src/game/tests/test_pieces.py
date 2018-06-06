@@ -1,12 +1,13 @@
 import unittest
 from ..start import GameState, GameTurn, pieces_to_string
+from ..data import PIECES_NUMBER
 
 
 class TestPiecesMethods(unittest.TestCase):
 
     def test_init_remaining_pieces_should_return_16_item_array(self):
         remaining_pieces = GameState().init_remaining_pieces()
-        self.assertEqual(len(remaining_pieces), GameState.pieces_number)
+        self.assertEqual(len(remaining_pieces), PIECES_NUMBER)
 
     def test_pieces_to_string_shouldnt_render_open_bracket(self):
         pieces_list = GameState().init_remaining_pieces()
