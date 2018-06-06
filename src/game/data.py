@@ -40,3 +40,79 @@ class GameTurn:
     def __init__(self):
         self.player_one_active = True
         self.selected_piece = 0
+
+
+class GameState:
+    """Definition of all data of the game at an instant:
+    - grid
+    - remaining_pieces
+    - game_turn"""
+
+    def __init__(self, parameter=""):
+        self.grid = GameState.init_grid()
+        self.remaining_pieces = GameState.init_remaining_pieces()
+        self.game_turn = GameState.init_game_turn()
+        self.message = ""
+        if type(parameter) is dict:
+            self.load_state(parameter)
+
+    def load_state(self, parameter):
+        try:
+            for key, val in parameter["grid"].items():
+                self.place_piece(key, val)
+
+            self.game_turn.player_one_active = parameter["turn"]["player"] == 1
+            self.game_turn.selected_piece = parameter["turn"]["selected"]
+        except:
+            self.message = "[The state to load is not valid] : Ignored"
+            self.grid = GameState.init_grid()
+            self.remaining_pieces = GameState.init_remaining_pieces()
+            self.game_turn = GameState.init_game_turn()
+
+    def place_piece(self, position, piece_id):
+        x, y = get_coordinates(position)
+        if self.remaining_pieces.count(piece_id) == 1:
+            self.grid[y][x] = piece_id
+            self.remaining_pieces.remove(piece_id)
+        else:
+            raise ValueError('Unvalid piece id')
+
+    @staticmethod
+    def init_grid(grid_size=4):
+        grid = []
+        i = 0
+        while i < grid_size:
+            grid.append([])
+            j = 0
+            while j < grid_size:
+                grid[i].append('.')
+                j += 1
+            i += 1
+        return grid
+
+    @staticmethod
+    def init_remaining_pieces(pieces_number=16):
+        list_pieces = []
+        i = 0
+        while i < pieces_number:
+            i += 1
+            list_pieces.append(i)
+        return list_pieces
+
+    @staticmethod
+    def init_game_turn():
+        game_turn = GameTurn()
+        return game_turn
+
+
+def get_coordinates(position):
+    x = 0
+    y = 0
+    if len(position) == 2:
+        x = ord(position[0]) - 65
+        y = int(position[1]) - 1
+        if y < 0 or y > 3 or x < 0 or x > 3:
+            raise ValueError('Unvalid coordinate')
+    else:
+        raise ValueError('Unvalid coordinate')
+    return x, y
