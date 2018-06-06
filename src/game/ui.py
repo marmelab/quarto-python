@@ -2,35 +2,15 @@ import sys
 import getopt
 import json
 import os
-from .data import Piece, GameTurn, GameState, PIECES_NUMBER
+from .piece import Piece
+from .turn import Turn
+from .state import State
+from .tools import GRID_SIZE, PIECES_NUMBER
 
 
 class UIRender:
 
     """Definition of the user interface and the interactions:"""
-
-    def start_game(self):
-        print("Welcome to Quarto-Py")
-
-        initial_state, error_parsing = self.get_state_parameter(sys.argv)
-        pieces_list = Piece.create_pieces_list()
-
-        game_state = GameState()
-
-        if len(error_parsing) > 0:
-            game_state.message = error_parsing
-        elif type(initial_state) is dict:
-            game_state.load_state(initial_state)
-
-        if (len(game_state.message) > 0):
-            game_state.message += """\nValid sample : --state='{"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}}'"""
-
-        while len(game_state.remaining_pieces) > 0:
-            self.display_game(game_state)
-            self.prompt_piece_selection(game_state)
-            game_state.swich_player()
-            self.display_game(game_state)
-            self.prompt_piece_location(game_state)
 
     def prompt_piece_selection(self, game_state):
         while True:
@@ -55,25 +35,6 @@ class UIRender:
         # basic remove of the piece to end correctly the "while", but will be replace by real placement for next story
         game_state.remaining_pieces.remove(game_state.game_turn.selected_piece)
 
-    def get_state_parameter(self, argv):
-        error_message = ""
-        if 'quarto.py' in argv[0]:
-            argv.pop(0)
-
-        try:
-            opts, args = getopt.getopt(argv, "s:", ["state="])
-        except getopt.GetoptError:
-            parameter = ""
-        for opt, arg in opts:
-            if opt == "--state":
-                parameter = arg
-        try:
-            parameter = json.loads(parameter)
-        except json.JSONDecodeError:
-            parameter = ""
-            error_message = "[The state to load is not wellformed] : Ignored"
-
-        return parameter, error_message
 
     def grid_to_string(self, grid):
         display_string = '    A   B   C   D\n'
