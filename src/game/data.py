@@ -86,13 +86,7 @@ class GameState:
         return [['.' for i in range(GRID_SIZE)] for j in range(GRID_SIZE)]
 
     def init_remaining_pieces(self):
-        return [i+1 for i in range(PIECES_NUMBER)]
-        list_pieces = []
-        i = 0
-        while i < PIECES_NUMBER:
-            i += 1
-            list_pieces.append(i)
-        return list_pieces
+        return [i + 1 for i in range(PIECES_NUMBER)]
 
 
 def get_coordinates(position):

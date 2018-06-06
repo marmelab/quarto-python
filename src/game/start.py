@@ -1,7 +1,7 @@
 import sys
 import getopt
 import json
-from .data import Piece, GameTurn, GameState
+from .data import Piece, GameTurn, GameState, PIECES_NUMBER
 
 
 def start_game():
@@ -62,10 +62,12 @@ def grid_to_string(grid):
 
 def pieces_to_string(remaining_pieces, game_turn):
     display_string = 'Remaining pieces :\n'
-    i = 1
-    for piece in remaining_pieces:
+    for i in range(1, PIECES_NUMBER + 1):
         display_string += ' '
-        display_string += selected_piece_to_string(piece, game_turn)
+        if remaining_pieces.count(i):
+            display_string += selected_piece_to_string(i, game_turn)
+        else:
+            display_string += ' . '
         display_string += ' '
     return display_string
 
