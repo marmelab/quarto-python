@@ -50,6 +50,7 @@ def prompt_piece_location(game_state):
         position = input("Choose the position to place your piece : ")
         try:
             game_state.place_piece(position, game_state.game_turn.selected_piece)
+            value_ok = True
         except ValueError:
             game_state.message = "You have to type a free coordinate using  this format : 'A1'"
             display_game(game_state)
@@ -101,7 +102,7 @@ def pieces_to_string(remaining_pieces, game_turn):
         if remaining_pieces.count(i):
             display_string += selected_piece_to_string(i, game_turn)
         else:
-            display_string += ' . '
+            display_string += ' .'
         display_string += ' '
     return display_string
 
