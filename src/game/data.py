@@ -57,8 +57,6 @@ class GameState:
         self.remaining_pieces = self.init_remaining_pieces()
         self.game_turn = GameTurn()
         self.message = ""
-        if type(initial_state) is dict:
-            self.load_state(initial_state)
 
     def load_state(self, initial_state):
         try:
@@ -67,7 +65,7 @@ class GameState:
 
             self.game_turn.player_one_active = initial_state["turn"]["player"] == 1
             self.game_turn.selected_piece = initial_state["turn"]["selected"]
-        except ValueError:
+        except (ValueError, TypeError) as e:
             self.message = "[The state to load is not valid] : Ignored"
             self.grid = self.init_grid()
             self.remaining_pieces = self.init_remaining_pieces()
@@ -88,7 +86,7 @@ class GameState:
     def init_remaining_pieces(self):
         return [i + 1 for i in range(PIECES_NUMBER)]
 
-    def check_piece_validity(self, piece):
+    def check_piece_availability(self, piece):
         return self.remaining_pieces.count(piece) == 1
 
     def swich_player(self):

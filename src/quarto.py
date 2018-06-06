@@ -1,5 +1,5 @@
-from game.start import start_game
+from game.start import UIRender
 
 
 if __name__ == "__main__":
-    start_game()
+    UIRender().start_game()

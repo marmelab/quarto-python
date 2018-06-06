@@ -1,5 +1,6 @@
 import unittest
-from ..start import players_to_string, GameTurn
+from ..start import UIRender
+from ..data import GameTurn
 
 
 class TestPlayersMethods(unittest.TestCase):
@@ -14,7 +15,7 @@ class TestPlayersMethods(unittest.TestCase):
 
     def test_players_to_string_should_create_the_reference_string(self):
         game_turn = GameTurn()
-        players_display = players_to_string(game_turn)
+        players_display = UIRender().players_to_string(game_turn)
         reference_string = "=> Player 1 <=     Player 2"
         self.assertEqual(players_display, reference_string)
 
