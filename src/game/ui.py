@@ -31,33 +31,36 @@ class UIRender:
         game_state.game_turn.selected_piece = piece
 
     def prompt_piece_location(self, game_state):
-        position = input("Choose the position to place your piece : ")
+        try:
+            position = input("Choose the position to place your piece : ")
+        except KeyboardInterrupt:
+                print("\nGame aborted")
+                exit()
         # basic remove of the piece to end correctly the "while", but will be replace by real placement for next story
         game_state.remaining_pieces.remove(game_state.game_turn.selected_piece)
 
     def grid_to_string(self, grid):
         display_string = '    A   B   C   D\n'
-        i = 1
-        for line in grid:
+        for i, row in enumerate(grid, start=1):
             display_string += ' '
             display_string += str(i)
             display_string += ' '
-            for position in line:
+            for position in row:
                 position = str(position)
                 if len(position) < 2:
                     display_string += ' '
                 display_string += position
                 display_string += '  '
             display_string += '\n'
-            i += 1
+            #i += 1
         return display_string
 
     def pieces_to_string(self, remaining_pieces, game_turn):
         display_string = 'Remaining pieces :\n'
-        for i in range(1, PIECES_NUMBER + 1):
+        for piece_id in range(1, PIECES_NUMBER + 1):
             display_string += ' '
-            if remaining_pieces.count(i):
-                display_string += self.selected_piece_to_string(i, game_turn)
+            if remaining_pieces.count(piece_id):
+                display_string += self.selected_piece_to_string(piece_id, game_turn)
             else:
                 display_string += ' . '
             display_string += ' '
@@ -83,6 +86,9 @@ class UIRender:
 
     def display_game(self, game_state):
         self.clear_terminal()
+        print()
+        print("Welcome to Quarto-Py")
+        print()
         print()
         print(self.grid_to_string(game_state.grid))
         print()

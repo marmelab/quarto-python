@@ -3,7 +3,7 @@ PIECES_NUMBER = 16
 
 
 def get_coordinates(position):
-    """Convert a postion of format 'A3' into coodinates x= 0 and y = 2 in the grid"""
+    """Convert a postion of format 'A3' into coordinates x= 0 and y = 2 in the grid"""
     x = 0
     y = 0
     if len(position) != 2:

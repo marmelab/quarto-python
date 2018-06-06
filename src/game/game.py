@@ -13,17 +13,17 @@ class Game:
 
     """Definition of the user interface and the interactions:"""
 
-    def start_game(self):
-        print("Welcome to Quarto-Py")
-
-        initial_state, error_parsing = self.parse_state_from_args(sys.argv)
+    def start(self):
         pieces_list = Piece.create_pieces_list()
-
         game_state = State()
+        
+        initial_state = ""
+        try :
+            initial_state = self.parse_state_from_args(sys.argv)
+        except ValueError as e:
+            game_state.message = e.args[0]     
 
-        if len(error_parsing) > 0:
-            game_state.message = error_parsing
-        elif type(initial_state) is dict:
+        if type(initial_state) is dict:
             game_state.load_state(initial_state)
 
         if (len(game_state.message) > 0):
@@ -38,7 +38,6 @@ class Game:
             ui.prompt_piece_location(game_state)
 
     def parse_state_from_args(self, argv):
-        error_message = ""
         if 'quarto.py' in argv[0]:
             argv.pop(0)
 
@@ -53,6 +52,6 @@ class Game:
             parameter = json.loads(parameter)
         except json.JSONDecodeError:
             parameter = ""
-            error_message = "[The state to load is not wellformed] : Ignored"
+            raise ValueError("[The state to load is not wellformed] : Ignored")
 
-        return parameter, error_message
+        return parameter
