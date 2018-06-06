@@ -67,7 +67,7 @@ class GameState:
 
             self.game_turn.player_one_active = initial_state["turn"]["player"] == 1
             self.game_turn.selected_piece = initial_state["turn"]["selected"]
-        except:
+        except ValueError:
             self.message = "[The state to load is not valid] : Ignored"
             self.grid = self.init_grid()
             self.remaining_pieces = self.init_remaining_pieces()
