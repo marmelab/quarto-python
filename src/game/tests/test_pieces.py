@@ -3,6 +3,7 @@ from ..state import State
 from ..turn import Turn
 from ..tools import PIECES_NUMBER
 from ..ui import UIRender
+from ..piece import Piece
 
 
 class TestPiecesMethods(unittest.TestCase):
@@ -38,6 +39,15 @@ class TestPiecesMethods(unittest.TestCase):
         game_state = State()
         game_state.remaining_pieces.remove(7)
         self.assertEqual(game_state.check_piece_availability(8), True)
+
+    def test_pieces_winning_by_round_shape(self):
+        self.assertEqual(Piece.check_line_winning(4, 6, 10, 8), True)
+
+    def test_pieces_winning_by_square_shape(self):
+        self.assertEqual(Piece.check_line_winning(3, 5, 7, 11), True)
+
+    def test_pieces_winning_by_big_size(self):
+        self.assertEqual(Piece.check_line_winning(8, 12, 15, 16), True)
 
 
 if __name__ == '__main__':

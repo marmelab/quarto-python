@@ -1,6 +1,6 @@
 import unittest
 from ..state import State
-from ..tools import GRID_SIZE
+from ..tools import GRID_SIZE, EMPTY_POSITION
 from ..game import Game
 from ..ui import UIRender
 
@@ -20,7 +20,7 @@ class TestGridMethods(unittest.TestCase):
         i = 0
         nb_places = 0
         while i < GRID_SIZE:
-            nb_places += grid[i].count('.')
+            nb_places += grid[i].count(EMPTY_POSITION)
             i += 1
         self.assertEqual(nb_places, GRID_SIZE*GRID_SIZE)
 
@@ -49,9 +49,64 @@ class TestGridMethods(unittest.TestCase):
         i = 0
         nb_dots = 0
         while i < 4:
-            nb_dots += game_state.grid[i].count('.')
+            nb_dots += game_state.grid[i].count(EMPTY_POSITION)
             i += 1
         self.assertEqual(nb_dots, GRID_SIZE*GRID_SIZE)
+
+    def test_place_piece_with_invalid_coordinate(self):
+        game_state = State()
+        game_state.grid[1][1] = 7
+        game_state.remaining_pieces.remove(7)
+        try:
+            game_state.place_piece('Zy2', 1)
+            self.assertTrue(False)
+        except ValueError:
+            self.assertTrue(True)
+
+    def test_place_piece_with_occupied_coordinate(self):
+        game_state = State()
+        game_state.grid[1][1] = 7
+        game_state.remaining_pieces.remove(7)
+        try:
+            game_state.place_piece('B2', 1)
+            self.assertTrue(False)
+        except ValueError:
+            self.assertTrue(True)
+
+    def test_place_piece_with_valid_coordinate(self):
+        game_state = State()
+        game_state.grid[1][1] = 7
+        game_state.remaining_pieces.remove(7)
+        try:
+            game_state.place_piece('A2', 1)
+            self.assertTrue(True)
+        except ValueError:
+            self.assertTrue(False)
+
+    def test_place_piece_with_invalid_piece(self):
+        game_state = State()
+        game_state.grid[1][1] = 7
+        game_state.remaining_pieces.remove(7)
+        try:
+            game_state.place_piece('A2', 7)
+            self.assertTrue(False)
+        except ValueError:
+            self.assertTrue(True)
+
+    def test_place_piece_with_valid_piece(self):
+        game_state = State()
+        game_state.grid[1][1] = 7
+        game_state.remaining_pieces.remove(7)
+        try:
+            game_state.place_piece('A2', 6)
+            self.assertTrue(True)
+        except ValueError:
+            self.assertTrue(False)
+
+    def test_place_piece_is_placed_at_good_position(self):
+        game_state = State()
+        game_state.place_piece('A2', 6)
+        self.assertTrue(game_state.grid[1][0] == 6)
 
     def test_from_dictionary_with_valid_string_place_correct_piece_on_grid(self):
         arg = []

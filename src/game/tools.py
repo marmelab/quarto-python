@@ -1,5 +1,6 @@
 GRID_SIZE = 4
 PIECES_NUMBER = 16
+EMPTY_POSITION = '.'
 
 
 def get_coordinates(position):

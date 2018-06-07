@@ -5,28 +5,37 @@ class Piece:
     - LightColor [True/False]
     - TopHole [True/False]"""
 
-    def __init__(self):
-        self.round_shape = True
-        self.big_size = True
-        self.light_color = True
-        self.top_hole = True
-        self.id = 1
+    def __init__(self, id=1, round_shape=False, big_size=False, light_color=False, top_hole=False):
+        self.round_shape = round_shape
+        self.big_size = big_size
+        self.light_color = light_color
+        self.top_hole = top_hole
+        self.id = id
+
+    def to_string(self):
+        return(1, ' : ', self.round_shape, ' - ', self.big_size, ' - ', self.light_color, ' - ', self.top_hole)
 
     @staticmethod
     def create_pieces_list():
-        pieces_list = []
-        i = 1
-        while i <= 16:
-            piece = Piece()
-            piece.id = i
-            if i in [1, 2, 3, 4, 5, 6, 7, 8]:
-                piece.round_shape = False
-            if i in [1, 2, 3, 4, 11, 12, 13, 14]:
-                piece.big_size = False
-            if i in [1, 2, 5, 6, 9, 10, 13, 14]:
-                piece.light_color = False
-            if i in [1, 3, 5, 7, 9, 11, 13, 15, 17]:
-                piece.top_hole = False
-            pieces_list.append(piece)
-            i += 1
-        return pieces_list
+        return [
+            Piece(1, False, False, False, False),
+            Piece(2, True, False, False, False),
+            Piece(3, False, True, False, False),
+            Piece(4, True, True, False, False),
+            Piece(5, False, False, True, False),
+            Piece(6, True, False, True, False),
+            Piece(7, False, True, True, False),
+            Piece(8, True, True, True, False),
+            Piece(9, False, False, False, True),
+            Piece(10, True, False, False, True),
+            Piece(11, False, True, False, True),
+            Piece(12, True, True, False, True),
+            Piece(13, False, False, True, True),
+            Piece(14, True, False, True, True),
+            Piece(15, False, True, True, True),
+            Piece(16, True, True, True, True)]
+
+    @staticmethod
+    def check_line_winning(piece1, piece2, piece3, piece4):
+        return (piece1 - 1) & (piece2 - 1) & (piece3 - 1) & (piece4 - 1) != 0 \
+            or ((piece1 - 1) ^ 15) & ((piece2 - 1) ^ 15) & ((piece3 - 1) ^ 15) & ((piece4 - 1) ^ 15) != 0
