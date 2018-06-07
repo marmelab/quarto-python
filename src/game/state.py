@@ -37,8 +37,7 @@ class State:
         if self.remaining_pieces.count(piece_id) == 1:
             if not self.check_position_availability(x, y):
                 raise ValueError('This position is already occupied on the grid')
-            else:
-                self.grid[y][x] = piece_id
+            self.grid[y][x] = piece_id
             self.remaining_pieces.remove(piece_id)
         else:
             raise ValueError('Unvalid piece id')

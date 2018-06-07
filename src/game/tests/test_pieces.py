@@ -41,13 +41,13 @@ class TestPiecesMethods(unittest.TestCase):
         self.assertEqual(game_state.check_piece_availability(8), True)
 
     def test_pieces_winning_by_round_shape(self):
-        self.assertNotEqual(Piece.check_line_winning(4, 6, 10, 8), 0)
+        self.assertEqual(Piece.check_line_winning(4, 6, 10, 8), True)
 
     def test_pieces_winning_by_square_shape(self):
-        self.assertNotEqual(Piece.check_line_winning(3, 5, 7, 11), 0)
+        self.assertEqual(Piece.check_line_winning(3, 5, 7, 11), True)
 
     def test_pieces_winning_by_big_size(self):
-        self.assertNotEqual(Piece.check_line_winning(8, 12, 15, 16), 0)
+        self.assertEqual(Piece.check_line_winning(8, 12, 15, 16), True)
 
 
 if __name__ == '__main__':

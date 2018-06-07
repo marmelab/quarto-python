@@ -5,32 +5,38 @@ class Piece:
     - LightColor [True/False]
     - TopHole [True/False]"""
 
-    def __init__(self):
-        self.round_shape = False
-        self.big_size = False
-        self.light_color = False
-        self.top_hole = False
-        self.id = 1
+    def __init__(self, id=1, round_shape=False, big_size=False, light_color=False, top_hole=False):
+        self.round_shape = round_shape
+        self.big_size = big_size
+        self.light_color = light_color
+        self.top_hole = top_hole
+        self.id = id
+
+    def to_string(self):
+        return(1, ' : ', self.round_shape, ' - ', self.big_size, ' - ', self.light_color, ' - ', self.top_hole)
 
     @staticmethod
     def create_pieces_list():
         pieces_list = []
-        i = 0
-        while i < 16:
-            piece = Piece()
-            piece.id = i + 1
-            if i in [1, 3, 5, 9, 7, 11, 13, 15]:
-                piece.round_shape = True
-            if i in [2, 3, 6, 10, 7, 11, 14, 15]:
-                piece.big_size = True
-            if i in [4, 5, 6, 12, 7, 13, 14, 15]:
-                piece.light_color = True
-            if i in [8, 9, 10, 12, 11, 14, 13, 15]:
-                piece.top_hole = True
-            pieces_list.append(piece)
-            i += 1
+        pieces_list.append(Piece(1, False, False, False, False))
+        pieces_list.append(Piece(2, True, False, False, False))
+        pieces_list.append(Piece(3, False, True, False, False))
+        pieces_list.append(Piece(4, True, True, False, False))
+        pieces_list.append(Piece(5, False, False, True, False))
+        pieces_list.append(Piece(6, True, False, True, False))
+        pieces_list.append(Piece(7, False, True, True, False))
+        pieces_list.append(Piece(8, True, True, True, False))
+        pieces_list.append(Piece(9, False, False, False, True))
+        pieces_list.append(Piece(10, True, False, False, True))
+        pieces_list.append(Piece(11, False, True, False, True))
+        pieces_list.append(Piece(12, True, True, False, True))
+        pieces_list.append(Piece(13, False, False, True, True))
+        pieces_list.append(Piece(14, True, False, True, True))
+        pieces_list.append(Piece(15, False, True, True, True))
+        pieces_list.append(Piece(16, True, True, True, True))
         return pieces_list
 
     @staticmethod
     def check_line_winning(piece1, piece2, piece3, piece4):
-            return (piece1 - 1) & (piece2 - 1) & (piece3 - 1) & (piece4 - 1) != 0
+        return (piece1 - 1) & (piece2 - 1) & (piece3 - 1) & (piece4 - 1) != 0 \
+            or ((piece1 - 1) ^ 15) & ((piece2 - 1) ^ 15) & ((piece3 - 1) ^ 15) & ((piece4 - 1) ^ 15) != 0
