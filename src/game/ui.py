@@ -44,31 +44,31 @@ class UIRender:
         pieces = list(filter(lambda x: x.id == piece_id, pieces_list))
         if len(pieces) == 1:
             if pieces[0].round_shape:
-                piece_display = chr(223)
+                if pieces[0].top_hole:
+                    piece_display = "○"
+                else:
+                    piece_display = "●"
             else:
-                piece_display = chr(215)
-
-            if pieces[0].light_color:
+                if pieces[0].top_hole:
+                    piece_display = "□"
+                else:
+                    piece_display = "■"
+            if pieces[0].big_size:
                 piece_display = "\033[32m" + piece_display
             else:
-                piece_display = "\033[94m" + piece_display
+                piece_display = "\033[91m" + piece_display
 
-            if pieces[0].big_size:
-                piece_display = "\033[41m" + piece_display
+            if pieces[0].light_color:
+                piece_display = "\033[47m" + piece_display
             else:
-                piece_display = "\033[45m" + piece_display
-
-            if pieces[0].top_hole:
-                piece_display = "\033[1m" + piece_display
-            else:
-                piece_display = "\033[21m" + piece_display
+                piece_display = "\033[100m" + piece_display
 
         piece_display = ' ' + piece_display
 
-        return piece_display + "\033[0m"
+        return piece_display + " \033[0m"
 
     def grid_to_string(self, grid, pieces_list):
-        display_string = '    A   B   C   D\n'
+        display_string = '    A    B    C    D\n'
         for i, row in enumerate(grid, start=1):
             display_string += ' '
             display_string += str(i)
@@ -84,11 +84,11 @@ class UIRender:
         for piece_id in range(1, PIECES_NUMBER + 1):
             display_string += ' '
             if remaining_pieces.count(piece_id):
+                display_string += self.piece_to_string(piece_id, pieces_list) + ' '
                 if piece_id >= 10:
                     display_string += ' '
-                display_string += self.piece_to_string(piece_id, pieces_list) + ' '
             else:
-                display_string += ' . '
+                display_string += ' .  '
             display_string += ' '
         display_string += '\n'
 
@@ -98,7 +98,7 @@ class UIRender:
                 display_string += self.selected_piece_to_string(piece_id, game_turn)
             else:
                 display_string += ' . '
-            display_string += ' '
+            display_string += '  '
         return display_string
 
     def selected_piece_to_string(self, piece_number, game_turn):
