@@ -31,13 +31,14 @@ class UIRender:
         game_state.game_turn.selected_piece = piece
 
     def prompt_piece_location(self, game_state):
-        try:
+        while True:
             position = input("Choose the position to place your piece : ")
-        except KeyboardInterrupt:
-                print("\nGame aborted")
-                exit()
-        # basic remove of the piece to end correctly the "while", but will be replace by real placement for next story
-        game_state.remaining_pieces.remove(game_state.game_turn.selected_piece)
+            try:
+                game_state.place_piece(position, game_state.game_turn.selected_piece)
+                return
+            except ValueError:
+                game_state.message = "You have to type a free coordinate using  this format : 'A1'"
+                self.display_game(game_state)
 
     def grid_to_string(self, grid):
         display_string = '    A   B   C   D\n'

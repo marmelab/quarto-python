@@ -1,5 +1,5 @@
 from .turn import Turn
-from .tools import GRID_SIZE, PIECES_NUMBER, get_coordinates
+from .tools import GRID_SIZE, PIECES_NUMBER, EMPTY_POSITION, get_coordinates
 
 
 class State:
@@ -35,19 +35,25 @@ class State:
         x, y = get_coordinates(position)
 
         if self.remaining_pieces.count(piece_id) == 1:
-            self.grid[y][x] = piece_id
+            if not self.check_position_availability(x, y):
+                raise ValueError('This position is already occupied on the grid')
+            else:
+                self.grid[y][x] = piece_id
             self.remaining_pieces.remove(piece_id)
         else:
             raise ValueError('Unvalid piece id')
 
     def init_grid(self):
-        return [['.' for i in range(GRID_SIZE)] for j in range(GRID_SIZE)]
+        return [[EMPTY_POSITION for i in range(GRID_SIZE)] for j in range(GRID_SIZE)]
 
     def init_remaining_pieces(self):
         return [i + 1 for i in range(PIECES_NUMBER)]
 
     def check_piece_availability(self, piece):
         return self.remaining_pieces.count(piece) == 1
+
+    def check_position_availability(self, x, y):
+        return self.grid[y][x] == EMPTY_POSITION
 
     def switch_player(self):
         self.game_turn.player_one_active = not self.game_turn.player_one_active
