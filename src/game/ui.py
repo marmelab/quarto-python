@@ -54,6 +54,7 @@ class UIRender:
                     piece_display = "□"
                 else:
                     piece_display = "■"
+                    
             if pieces[0].big_size:
                 piece_display = "\033[32m" + piece_display
             else:
@@ -64,9 +65,7 @@ class UIRender:
             else:
                 piece_display = "\033[100m" + piece_display
 
-        piece_display = ' ' + piece_display
-
-        return piece_display + " \033[0m"
+        return ' ' +piece_display + " \033[0m"
 
     def grid_to_string(self, grid):
         display_string = '    A    B    C    D\n'
