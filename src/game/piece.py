@@ -6,27 +6,31 @@ class Piece:
     - TopHole [True/False]"""
 
     def __init__(self):
-        self.round_shape = True
-        self.big_size = True
-        self.light_color = True
-        self.top_hole = True
+        self.round_shape = False
+        self.big_size = False
+        self.light_color = False
+        self.top_hole = False
         self.id = 1
 
     @staticmethod
     def create_pieces_list():
         pieces_list = []
-        i = 1
-        while i <= 16:
+        i = 0
+        while i < 16:
             piece = Piece()
-            piece.id = i
-            if i in [1, 2, 3, 4, 5, 6, 7, 8]:
-                piece.round_shape = False
-            if i in [1, 2, 3, 4, 11, 12, 13, 14]:
-                piece.big_size = False
-            if i in [1, 2, 5, 6, 9, 10, 13, 14]:
-                piece.light_color = False
-            if i in [1, 3, 5, 7, 9, 11, 13, 15, 17]:
-                piece.top_hole = False
+            piece.id = i + 1
+            if i in [1, 3, 5, 9, 7, 11, 13, 15]:
+                piece.round_shape = True
+            if i in [2, 3, 6, 10, 7, 11, 14, 15]:
+                piece.big_size = True
+            if i in [4, 5, 6, 12, 7, 13, 14, 15]:
+                piece.light_color = True
+            if i in [8, 9, 10, 12, 11, 14, 13, 15]:
+                piece.top_hole = True
             pieces_list.append(piece)
             i += 1
         return pieces_list
+
+    @staticmethod
+    def check_line_winning(piece1, piece2, piece3, piece4):
+            return (piece1 - 1) & (piece2 - 1) & (piece3 - 1) & (piece4 - 1) != 0

@@ -49,8 +49,14 @@ class State:
     def init_remaining_pieces(self):
         return [i + 1 for i in range(PIECES_NUMBER)]
 
-    def check_piece_availability(self, piece):
-        return self.remaining_pieces.count(piece) == 1
+    def check_piece_availability(self, piece_id):
+        return self.remaining_pieces.count(piece_id) == 1
+
+    def select_piece_for_opponent(self, piece_id):
+        if not self.check_piece_availability(piece_id):
+            return False
+        self.game_turn.selected_piece = piece_id
+        return True
 
     def check_position_availability(self, x, y):
         return self.grid[y][x] == EMPTY_POSITION

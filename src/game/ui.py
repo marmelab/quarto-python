@@ -16,9 +16,8 @@ class UIRender:
         while True:
             try:
                 piece = int(input("Choose the next piece of the opponent : "))
-                valid_piece = game_state.check_piece_availability(piece)
-                if valid_piece:
-                    break
+                if game_state.select_piece_for_opponent(piece):
+                    return
                 game_state.message = "You must choose a number available in the list"
                 self.display_game(game_state)
 
@@ -28,7 +27,6 @@ class UIRender:
             except KeyboardInterrupt:
                 print("\nGame aborted")
                 exit()
-        game_state.game_turn.selected_piece = piece
 
     def prompt_piece_location(self, game_state):
         while True:
