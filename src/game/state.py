@@ -15,7 +15,7 @@ class State:
         self.game_turn = Turn()
         self.message = ""
 
-    def from_dictionary(self, initial_state_dictionary):
+    def import_state_from_dictionary(self, initial_state_dictionary):
         try:
             for key, val in initial_state_dictionary["grid"].items():
                 self.place_piece(key, val)
@@ -95,11 +95,9 @@ class State:
         return False
 
     def check_diags_winning(self):
-        if Piece.check_line_winning(self.grid[0][0], self.grid[1][1], self.grid[2][2], self.grid[3][3]):
+        if Piece.check_line_winning(self.grid[0][0], self.grid[1][1], self.grid[2][2], self.grid[3][3]) \
+                or Piece.check_line_winning(self.grid[0][3], self.grid[1][2], self.grid[2][1], self.grid[3][0]):
             return True
-        elif Piece.check_line_winning(self.grid[0][3], self.grid[1][2], self.grid[2][1], self.grid[3][0]):
-            return True
-        return False
 
     def is_selected_piece(self):
         return self.game_turn.selected_piece > 0
