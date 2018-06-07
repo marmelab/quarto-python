@@ -24,33 +24,35 @@ class Game:
             game_state.message = e.args[0]
 
         if type(initial_state) is dict:
-            game_state.from_dictionary(initial_state)
+            game_state.import_state_from_dictionary(initial_state)
 
         if (len(game_state.message) > 0):
             game_state.message += """\nValid sample : --state='{"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}}'"""
 
         ui = UIRender()
-        while len(game_state.remaining_pieces) > 0:
+        while not game_state.check_draw():
+            if game_state.check_winner():
+                break
             ui.display_game(game_state)
-            ui.prompt_piece_selection(game_state)
-            game_state.switch_player()
-            ui.display_game(game_state)
+            if not game_state.is_selected_piece():
+                ui.prompt_piece_selection(game_state)
+                game_state.switch_player()
+                ui.display_game(game_state)
             ui.prompt_piece_location(game_state)
+
+        ui.display_game(game_state)
 
     def parse_state_from_args(self, argv):
         if 'quarto.py' in argv[0]:
             argv.pop(0)
 
         try:
-            opts, args = getopt.getopt(argv, "s:", ["state="])
-        except getopt.GetoptError:
-            parameter = ""
-        for opt, arg in opts:
-            if opt == "--state":
-                parameter = arg
-        try:
+            opts, args = getopt.getopt(argv, "", ["state="])
+            for opt, arg in opts:
+                if opt == "--state":
+                    parameter = arg
             parameter = json.loads(parameter)
-        except (json.decoder.JSONDecodeError, json.JSONDecodeError):
+        except (getopt.GetoptError, UnboundLocalError, json.decoder.JSONDecodeError, json.JSONDecodeError):
             parameter = ""
             raise ValueError("[The state to load is not wellformed] : Ignored")
 

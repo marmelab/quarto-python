@@ -49,6 +49,33 @@ class TestPiecesMethods(unittest.TestCase):
     def test_pieces_winning_by_big_size(self):
         self.assertEqual(Piece.check_line_winning(8, 12, 15, 16), True)
 
+    def test_pieces_winning_by_small_size(self):
+        self.assertEqual(Piece.check_line_winning(6, 9, 10, 13), True)
+
+    def test_pieces_winning_by_light_color(self):
+        self.assertEqual(Piece.check_line_winning(5, 6, 7, 13), True)
+
+    def test_pieces_winning_by_dark_color(self):
+        self.assertEqual(Piece.check_line_winning(1, 2, 3, 4), True)
+
+    def test_pieces_winning_by_top_hole(self):
+            self.assertEqual(Piece.check_line_winning(9, 10, 11, 12), True)
+
+    def test_pieces_winning_by_top_flat(self):
+        self.assertEqual(Piece.check_line_winning(5, 6, 7, 8), True)
+
+    def test_pieces_no_winning(self):
+        self.assertEqual(Piece.check_line_winning(8, 14, 15, 16), True)
+
+    def test_is_selected_piece(self):
+        game_state = State()
+        game_state.game_turn.selected_piece = 3
+        self.assertEqual(game_state.is_selected_piece(), True)
+
+    def test_is_not_selected_piece(self):
+        game_state = State()
+        self.assertEqual(game_state.is_selected_piece(), False)
+
 
 if __name__ == '__main__':
     unittest.main()

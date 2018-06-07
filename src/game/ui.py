@@ -19,8 +19,6 @@ class UIRender:
                 if game_state.select_piece_for_opponent(piece):
                     return
                 game_state.message = "You must choose a number available in the list"
-                self.display_game(game_state)
-
             except ValueError:
                 game_state.message = "You have to type number between 1 and " + str(PIECES_NUMBER)
                 self.display_game(game_state)
@@ -37,6 +35,9 @@ class UIRender:
             except ValueError:
                 game_state.message = "You have to type a free coordinate using  this format : 'A1'"
                 self.display_game(game_state)
+            except KeyboardInterrupt:
+                print("\nGame aborted")
+                exit()
 
     def grid_to_string(self, grid):
         display_string = '    A   B   C   D\n'
