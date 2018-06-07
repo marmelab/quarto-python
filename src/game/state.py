@@ -1,4 +1,5 @@
 from .turn import Turn
+from .piece import Piece
 from .tools import GRID_SIZE, PIECES_NUMBER, EMPTY_POSITION, get_coordinates
 
 
@@ -62,3 +63,38 @@ class State:
 
     def switch_player(self):
         self.game_turn.player_one_active = not self.game_turn.player_one_active
+
+    def check_winner(self):
+        if self.check_raws_winning() or self.check_columns_winning() or self.check_diags_winning():
+            if self.game_turn.player_one_active:
+                player_name = "Player 1"
+            else:
+                player_name = "Player 2"
+            self.message = player_name + " WINNNNS !!!!!!"
+            return True
+        return False
+
+    def check_draw(self):
+        if len(self.remaining_pieces) == 0:
+            self.message = "It's a draw, try again"
+            return True
+        return False
+
+    def check_raws_winning(self):
+        for raw in self.grid:
+            if Piece.check_line_winning(raw[0], raw[1], raw[2], raw[3]):
+                return True
+        return False
+
+    def check_columns_winning(self):
+        for i in range(3):
+            if Piece.check_line_winning(self.grid[0][i], self.grid[1][i], self.grid[2][i], self.grid[3][i]):
+                return True
+        return False
+
+    def check_diags_winning(self):
+        if Piece.check_line_winning(self.grid[0][0], self.grid[1][1], self.grid[2][2], self.grid[3][3]):
+            return True
+        elif Piece.check_line_winning(self.grid[0][3], self.grid[1][2], self.grid[2][1], self.grid[3][0]):
+            return True
+        return False

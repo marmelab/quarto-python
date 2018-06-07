@@ -30,12 +30,16 @@ class Game:
             game_state.message += """\nValid sample : --state='{"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}}'"""
 
         ui = UIRender()
-        while len(game_state.remaining_pieces) > 0:
+        while not game_state.check_draw():
+            if game_state.check_winner():
+                break
             ui.display_game(game_state)
             ui.prompt_piece_selection(game_state)
             game_state.switch_player()
             ui.display_game(game_state)
             ui.prompt_piece_location(game_state)
+
+        ui.display_game(game_state)
 
     def parse_state_from_args(self, argv):
         if 'quarto.py' in argv[0]:
