@@ -17,24 +17,23 @@ class Piece:
 
     @staticmethod
     def create_pieces_list():
-        pieces_list = []
-        pieces_list.append(Piece(1, False, False, False, False))
-        pieces_list.append(Piece(2, True, False, False, False))
-        pieces_list.append(Piece(3, False, True, False, False))
-        pieces_list.append(Piece(4, True, True, False, False))
-        pieces_list.append(Piece(5, False, False, True, False))
-        pieces_list.append(Piece(6, True, False, True, False))
-        pieces_list.append(Piece(7, False, True, True, False))
-        pieces_list.append(Piece(8, True, True, True, False))
-        pieces_list.append(Piece(9, False, False, False, True))
-        pieces_list.append(Piece(10, True, False, False, True))
-        pieces_list.append(Piece(11, False, True, False, True))
-        pieces_list.append(Piece(12, True, True, False, True))
-        pieces_list.append(Piece(13, False, False, True, True))
-        pieces_list.append(Piece(14, True, False, True, True))
-        pieces_list.append(Piece(15, False, True, True, True))
-        pieces_list.append(Piece(16, True, True, True, True))
-        return pieces_list
+        return [
+            Piece(1, False, False, False, False),
+            Piece(2, True, False, False, False),
+            Piece(3, False, True, False, False),
+            Piece(4, True, True, False, False),
+            Piece(5, False, False, True, False),
+            Piece(6, True, False, True, False),
+            Piece(7, False, True, True, False),
+            Piece(8, True, True, True, False),
+            Piece(9, False, False, False, True),
+            Piece(10, True, False, False, True),
+            Piece(11, False, True, False, True),
+            Piece(12, True, True, False, True),
+            Piece(13, False, False, True, True),
+            Piece(14, True, False, True, True),
+            Piece(15, False, True, True, True),
+            Piece(16, True, True, True, True)]
 
     @staticmethod
     def check_line_winning(piece1, piece2, piece3, piece4):
