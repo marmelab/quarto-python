@@ -14,7 +14,6 @@ class Game:
     """Definition of the user interface and the interactions:"""
 
     def start(self):
-        pieces_list = Piece.create_pieces_list()
         game_state = State()
 
         initial_state = ""
@@ -33,14 +32,14 @@ class Game:
         while not game_state.check_draw():
             if game_state.check_winner():
                 break
-            ui.display_game(game_state, pieces_list)
+            ui.display_game(game_state)
             if not game_state.is_selected_piece():
-                ui.prompt_piece_selection(game_state, pieces_list)
+                ui.prompt_piece_selection(game_state)
                 game_state.switch_player()
-                ui.display_game(game_state, pieces_list)
-            ui.prompt_piece_location(game_state, pieces_list)
+                ui.display_game(game_state)
+            ui.prompt_piece_location(game_state)
 
-        ui.display_game(game_state, pieces_list)
+        ui.display_game(game_state)
 
     def parse_state_from_args(self, argv):
         if 'quarto.py' in argv[0]:

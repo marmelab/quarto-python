@@ -2,7 +2,7 @@ import sys
 import getopt
 import json
 import os
-from .piece import Piece
+from .piece import pieces_list_definition
 from .turn import Turn
 from .state import State
 from .tools import GRID_SIZE, PIECES_NUMBER
@@ -12,7 +12,7 @@ class UIRender:
 
     """Definition of the user interface and the interactions:"""
 
-    def prompt_piece_selection(self, game_state, pieces_list):
+    def prompt_piece_selection(self, game_state):
         while True:
             try:
                 piece = int(input("Choose the next piece of the opponent : "))
@@ -21,12 +21,12 @@ class UIRender:
                 game_state.message = "You must choose a number available in the list"
             except ValueError:
                 game_state.message = "You have to type number between 1 and " + str(PIECES_NUMBER)
-                self.display_game(game_state, pieces_list)
+                self.display_game(game_state)
             except KeyboardInterrupt:
                 print("\nGame aborted")
                 exit()
 
-    def prompt_piece_location(self, game_state, pieces_list):
+    def prompt_piece_location(self, game_state):
         while True:
             try:
                 position = input("Choose the position to place your piece : ")
@@ -34,14 +34,14 @@ class UIRender:
                 return
             except ValueError:
                 game_state.message = "You have to type a free coordinate using  this format : 'A1'"
-                self.display_game(game_state, pieces_list)
+                self.display_game(game_state)
             except KeyboardInterrupt:
                 print("\nGame aborted")
                 exit()
 
-    def piece_to_string(self, piece_id, pieces_list):
+    def piece_to_string(self, piece_id):
         piece_display = str(piece_id)
-        pieces = list(filter(lambda x: x.id == piece_id, pieces_list))
+        pieces = list(filter(lambda x: x.id == piece_id, pieces_list_definition))
         if len(pieces) == 1:
             if pieces[0].round_shape:
                 if pieces[0].top_hole:
@@ -67,24 +67,24 @@ class UIRender:
 
         return piece_display + " \033[0m"
 
-    def grid_to_string(self, grid, pieces_list):
+    def grid_to_string(self, grid):
         display_string = '    A    B    C    D\n'
         for i, row in enumerate(grid, start=1):
             display_string += ' '
             display_string += str(i)
             display_string += ' '
             for position in row:
-                display_string += self.piece_to_string(position, pieces_list)
+                display_string += self.piece_to_string(position)
                 display_string += '  '
             display_string += '\n'
         return display_string
 
-    def pieces_to_string(self, remaining_pieces, game_turn, pieces_list):
+    def pieces_to_string(self, remaining_pieces, game_turn):
         display_string = 'Remaining pieces :\n'
         for piece_id in range(1, PIECES_NUMBER + 1):
             display_string += ' '
             if remaining_pieces.count(piece_id):
-                display_string += self.piece_to_string(piece_id, pieces_list) + ' '
+                display_string += self.piece_to_string(piece_id) + ' '
                 if piece_id >= 10:
                     display_string += ' '
             else:
@@ -119,17 +119,17 @@ class UIRender:
     def clear_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
 
-    def display_game(self, game_state, pieces_list):
+    def display_game(self, game_state):
         self.clear_terminal()
         print()
         print("\033[32;1mWelcome to Quarto-Py\033[0m")
         print()
         print()
-        print(self.grid_to_string(game_state.grid, pieces_list))
+        print(self.grid_to_string(game_state.grid))
         print()
         print(self.players_to_string(game_state.game_turn))
         print()
-        print(self.pieces_to_string(game_state.remaining_pieces, game_state.game_turn, pieces_list))
+        print(self.pieces_to_string(game_state.remaining_pieces, game_state.game_turn))
         print()
         if len(game_state.message) > 0:
             print(game_state.message)

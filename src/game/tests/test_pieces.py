@@ -15,19 +15,19 @@ class TestPiecesMethods(unittest.TestCase):
     def test_pieces_to_string_shouldnt_render_open_bracket(self):
         pieces_list = State().init_remaining_pieces()
         game_turn = Turn()
-        pieces_display = UIRender().pieces_to_string(pieces_list, game_turn, Piece.create_pieces_list())
+        pieces_display = UIRender().pieces_to_string(pieces_list, game_turn)
         self.assertEqual(pieces_display.count(" ["), 0)
 
     def test_pieces_to_string_shouldnt_render_close_bracket(self):
         pieces_list = State().init_remaining_pieces()
         game_turn = Turn()
-        pieces_display = UIRender().pieces_to_string(pieces_list, game_turn, Piece.create_pieces_list())
+        pieces_display = UIRender().pieces_to_string(pieces_list, game_turn)
         self.assertEqual(pieces_display.count("] "), 0)
 
     def test_pieces_to_string_shouldnt_render_empty_string(self):
         pieces_list = State().init_remaining_pieces()
         game_turn = Turn()
-        pieces_display = UIRender().pieces_to_string(pieces_list, game_turn, Piece.create_pieces_list())
+        pieces_display = UIRender().pieces_to_string(pieces_list, game_turn)
         self.assertGreater(len(pieces_display), 0)
 
     def test_pieces_selection_fail_when_number_not_in_remaining_list(self):

@@ -19,28 +19,28 @@ class Piece:
         return(1, ' : ', self.round_shape, ' - ', self.big_size, ' - ', self.light_color, ' - ', self.top_hole)
 
     @staticmethod
-    def create_pieces_list():
-        return [
-            Piece(1, False, False, False, False),
-            Piece(2, True, False, False, False),
-            Piece(3, False, True, False, False),
-            Piece(4, True, True, False, False),
-            Piece(5, False, False, True, False),
-            Piece(6, True, False, True, False),
-            Piece(7, False, True, True, False),
-            Piece(8, True, True, True, False),
-            Piece(9, False, False, False, True),
-            Piece(10, True, False, False, True),
-            Piece(11, False, True, False, True),
-            Piece(12, True, True, False, True),
-            Piece(13, False, False, True, True),
-            Piece(14, True, False, True, True),
-            Piece(15, False, True, True, True),
-            Piece(16, True, True, True, True)]
-
-    @staticmethod
     def check_line_winning(piece1, piece2, piece3, piece4):
         if EMPTY_POSITION not in (piece1, piece2, piece3, piece4):
             return (piece1 - 1) & (piece2 - 1) & (piece3 - 1) & (piece4 - 1) != 0 \
                 or ((piece1 - 1) ^ 15) & ((piece2 - 1) ^ 15) & ((piece3 - 1) ^ 15) & ((piece4 - 1) ^ 15) != 0
         return False
+
+
+pieces_list_definition = [
+        Piece(1, False, False, False, False),
+        Piece(2, True, False, False, False),
+        Piece(3, False, True, False, False),
+        Piece(4, True, True, False, False),
+        Piece(5, False, False, True, False),
+        Piece(6, True, False, True, False),
+        Piece(7, False, True, True, False),
+        Piece(8, True, True, True, False),
+        Piece(9, False, False, False, True),
+        Piece(10, True, False, False, True),
+        Piece(11, False, True, False, True),
+        Piece(12, True, True, False, True),
+        Piece(13, False, False, True, True),
+        Piece(14, True, False, True, True),
+        Piece(15, False, True, True, True),
+        Piece(16, True, True, True, True)
+    ]
