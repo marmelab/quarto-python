@@ -24,7 +24,7 @@ class Game:
             game_state.message = e.args[0]
 
         if type(initial_state) is dict:
-            game_state.load_state(initial_state)
+            game_state.from_dictionary(initial_state)
 
         if (len(game_state.message) > 0):
             game_state.message += """\nValid sample : --state='{"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}}'"""
@@ -33,7 +33,7 @@ class Game:
         while len(game_state.remaining_pieces) > 0:
             ui.display_game(game_state)
             ui.prompt_piece_selection(game_state)
-            game_state.swich_player()
+            game_state.switch_player()
             ui.display_game(game_state)
             ui.prompt_piece_location(game_state)
 

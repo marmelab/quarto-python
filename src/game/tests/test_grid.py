@@ -35,7 +35,7 @@ class TestGridMethods(unittest.TestCase):
 """  # noqa
         self.assertEqual(grid_display, reference_display)
 
-    def test_load_state_with_invalid_string_create_empty_grid(self):
+    def test_from_dictionary_with_invalid_string_create_empty_grid(self):
         arg = []
         arg.append("""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}""")
         initial_state = ""
@@ -45,7 +45,7 @@ class TestGridMethods(unittest.TestCase):
             e.args
             # do nothing
         game_state = State()
-        game_state.load_state(initial_state)
+        game_state.from_dictionary(initial_state)
         i = 0
         nb_dots = 0
         while i < 4:
@@ -53,36 +53,36 @@ class TestGridMethods(unittest.TestCase):
             i += 1
         self.assertEqual(nb_dots, GRID_SIZE*GRID_SIZE)
 
-    def test_load_state_with_valid_string_place_correct_piece_on_grid(self):
+    def test_from_dictionary_with_valid_string_place_correct_piece_on_grid(self):
         arg = []
         arg.append("""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}}""")
         initial_state = Game().parse_state_from_args(arg)
         game_state = State()
-        game_state.load_state(initial_state)
+        game_state.from_dictionary(initial_state)
         self.assertEqual(game_state.grid[1][0], 10)
 
-    def test_load_state_with_valid_string_remove_correct_piece_from_remaining_list(self):
+    def test_from_dictionary_with_valid_string_remove_correct_piece_from_remaining_list(self):
         arg = []
         arg.append("""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}}""")
         initial_state = Game().parse_state_from_args(arg)
         game_state = State()
-        game_state.load_state(initial_state)
+        game_state.from_dictionary(initial_state)
         self.assertEqual(game_state.remaining_pieces.count(12), 0)
 
-    def test_load_state_with_valid_string_select_correct_player(self):
+    def test_from_dictionary_with_valid_string_select_correct_player(self):
         arg = []
         arg.append("""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 2,"selected" : 7}}""")
         initial_state = Game().parse_state_from_args(arg)
         game_state = State()
-        game_state.load_state(initial_state)
+        game_state.from_dictionary(initial_state)
         self.assertEqual(game_state.game_turn.player_one_active, False)
 
-    def test_load_state_with_valid_string_select_correct_piece_to_play(self):
+    def test_from_dictionary_with_valid_string_select_correct_piece_to_play(self):
         arg = []
         arg.append("""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 2,"selected" : 7}}""")
         initial_state = Game().parse_state_from_args(arg)
         game_state = State()
-        game_state.load_state(initial_state)
+        game_state.from_dictionary(initial_state)
         self.assertEqual(game_state.game_turn.selected_piece, 7)
 
 

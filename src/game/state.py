@@ -14,13 +14,13 @@ class State:
         self.game_turn = Turn()
         self.message = ""
 
-    def load_state(self, initial_state):
+    def from_dictionary(self, initial_state_dictionary):
         try:
-            for key, val in initial_state["grid"].items():
+            for key, val in initial_state_dictionary["grid"].items():
                 self.place_piece(key, val)
 
-            self.game_turn.player_one_active = initial_state["turn"]["player"] == 1
-            selected_piece = initial_state["turn"]["selected"]
+            self.game_turn.player_one_active = initial_state_dictionary["turn"]["player"] == 1
+            selected_piece = initial_state_dictionary["turn"]["selected"]
             if self.remaining_pieces.count(selected_piece) == 1:
                 self.game_turn.selected_piece = selected_piece
             else:
@@ -49,5 +49,5 @@ class State:
     def check_piece_availability(self, piece):
         return self.remaining_pieces.count(piece) == 1
 
-    def swich_player(self):
+    def switch_player(self):
         self.game_turn.player_one_active = not self.game_turn.player_one_active
