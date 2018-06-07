@@ -6,7 +6,7 @@ help:
 BIN = docker run \
 	--interactive \
 	--rm \
-	-v "/code" \
+	-v "${PWD}:/code" \
 	--name quarto-python \
 	quarto-python
 
@@ -17,7 +17,7 @@ install-local:
 	pip install -r requirements.txt
 
 run: ## Start the game
-	 $(BIN) python ./src/quarto.py
+	 $(BIN) bash -ci "python ./src/quarto.py"
 
 test: ## Test the code
 	$(BIN) python3 -m unittest discover
