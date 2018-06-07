@@ -1,3 +1,5 @@
+MAKEFLAGS += --silent
+
 .PHONY: help install run lint
 
 help: 
