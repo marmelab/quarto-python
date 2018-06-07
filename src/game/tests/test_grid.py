@@ -122,6 +122,16 @@ class TestGridMethods(unittest.TestCase):
         game_state.from_dictionary(initial_state)
         self.assertFalse(game_state.check_draw())
 
+    def test_win_on_grid(self):
+        game_state = State()
+        arg = ["""--state={"grid" : {"A1":1,"A2":10,"A3":2,"A4":5,
+        "B1":16,"B2":9,"B4":6,
+        "C1":3,"C2":8,"C3":7,
+        "D4":4},"turn" :{"player" : 1}}"""]
+        initial_state = Game().parse_state_from_args(arg)
+        game_state.from_dictionary(initial_state)
+        self.assertTrue(game_state.check_winner())
+
     def test_place_piece_is_placed_at_good_position(self):
         game_state = State()
         game_state.place_piece('A2', 6)
