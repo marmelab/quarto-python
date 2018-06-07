@@ -1,3 +1,5 @@
+from .tools import EMPTY_POSITION
+
 class Piece:
     """Definition of a game piece by 4 characteristics:
     - RoundShape [True/False]
@@ -37,5 +39,7 @@ class Piece:
 
     @staticmethod
     def check_line_winning(piece1, piece2, piece3, piece4):
-        return (piece1 - 1) & (piece2 - 1) & (piece3 - 1) & (piece4 - 1) != 0 \
-            or ((piece1 - 1) ^ 15) & ((piece2 - 1) ^ 15) & ((piece3 - 1) ^ 15) & ((piece4 - 1) ^ 15) != 0
+        if EMPTY_POSITION not in (piece1, piece2, piece3, piece4):
+            return (piece1 - 1) & (piece2 - 1) & (piece3 - 1) & (piece4 - 1) != 0 \
+                or ((piece1 - 1) ^ 15) & ((piece2 - 1) ^ 15) & ((piece3 - 1) ^ 15) & ((piece4 - 1) ^ 15) != 0
+        return False

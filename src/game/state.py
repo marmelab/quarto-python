@@ -70,7 +70,7 @@ class State:
                 player_name = "Player 1"
             else:
                 player_name = "Player 2"
-            self.message = player_name + " WINNNNS !!!!!!"
+            self.message = player_name + " WINNNNS !!!!!!\n"
             return True
         return False
 
