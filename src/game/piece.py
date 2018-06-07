@@ -1,5 +1,6 @@
 from .tools import EMPTY_POSITION
 
+
 class Piece:
     """Definition of a game piece by 4 characteristics:
     - RoundShape [True/False]

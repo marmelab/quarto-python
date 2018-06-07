@@ -34,9 +34,10 @@ class Game:
             if game_state.check_winner():
                 break
             ui.display_game(game_state)
-            ui.prompt_piece_selection(game_state)
-            game_state.switch_player()
-            ui.display_game(game_state)
+            if not game_state.is_selected_piece():
+                ui.prompt_piece_selection(game_state)
+                game_state.switch_player()
+                ui.display_game(game_state)
             ui.prompt_piece_location(game_state)
 
         ui.display_game(game_state)
@@ -46,15 +47,12 @@ class Game:
             argv.pop(0)
 
         try:
-            opts, args = getopt.getopt(argv, "s:", ["state="])
-        except getopt.GetoptError:
-            parameter = ""
-        for opt, arg in opts:
-            if opt == "--state":
-                parameter = arg
-        try:
+            opts, args = getopt.getopt(argv, "", ["state="])
+            for opt, arg in opts:
+                if opt == "--state":
+                    parameter = arg
             parameter = json.loads(parameter)
-        except (json.decoder.JSONDecodeError, json.JSONDecodeError):
+        except (getopt.GetoptError, UnboundLocalError, json.decoder.JSONDecodeError, json.JSONDecodeError):
             parameter = ""
             raise ValueError("[The state to load is not wellformed] : Ignored")
 

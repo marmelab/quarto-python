@@ -36,8 +36,7 @@ class TestGridMethods(unittest.TestCase):
         self.assertEqual(grid_display, reference_display)
 
     def test_from_dictionary_with_invalid_string_create_empty_grid(self):
-        arg = []
-        arg.append("""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}""")
+        arg = ["""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}"""]
         initial_state = ""
         try:
             initial_state = Game().parse_state_from_args(arg)
@@ -103,38 +102,61 @@ class TestGridMethods(unittest.TestCase):
         except ValueError:
             self.assertTrue(False)
 
+    def test_draw_on_full_grid(self):
+        game_state = State()
+        arg = ["""--state={"grid" : {"A1":1,"A2":10,"A3":2,"A4":5,
+        "B1":16,"B2":9,"B3":13,"B4":6,
+        "C1":3,"C2":8,"C3":7,"C4":14,
+        "D1":11,"D2":12,"D3":15,"D4":4},"turn" :{"player" : 1}}"""]
+        initial_state = Game().parse_state_from_args(arg)
+        game_state.from_dictionary(initial_state)
+        self.assertTrue(game_state.check_draw())
+
+    def test_no_draw_on_not_full_grid(self):
+        game_state = State()
+        arg = ["""--state={"grid" : {"A1":1,"A2":10,"A3":2,"A4":5,
+        "B1":16,"B2":9,"B3":13,"B4":6,
+        "C1":3,"C2":8,"C3":7,"C4":14,
+        "D1":11,"D2":12,"D4":4},"turn" :{"player" : 1, "selected" : 15}}"""]
+        initial_state = Game().parse_state_from_args(arg)
+        game_state.from_dictionary(initial_state)
+        self.assertFalse(game_state.check_draw())
+
     def test_place_piece_is_placed_at_good_position(self):
         game_state = State()
         game_state.place_piece('A2', 6)
         self.assertTrue(game_state.grid[1][0] == 6)
 
     def test_from_dictionary_with_valid_string_place_correct_piece_on_grid(self):
-        arg = []
-        arg.append("""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}}""")
+        arg = ["""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}}"""]
+        initial_state = Game().parse_state_from_args(arg)
+        game_state = State()
+        game_state.from_dictionary(initial_state)
+        self.assertEqual(game_state.grid[1][0], 10)
+
+    def test_from_dictionary_without_seleted_piece_is_ok(self):
+        arg = ["""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1}}"""]
         initial_state = Game().parse_state_from_args(arg)
         game_state = State()
         game_state.from_dictionary(initial_state)
         self.assertEqual(game_state.grid[1][0], 10)
 
     def test_from_dictionary_with_valid_string_remove_correct_piece_from_remaining_list(self):
-        arg = []
-        arg.append("""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}}""")
+        arg = ["""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 1,"selected" : 7}}"""]
         initial_state = Game().parse_state_from_args(arg)
         game_state = State()
         game_state.from_dictionary(initial_state)
         self.assertEqual(game_state.remaining_pieces.count(12), 0)
 
     def test_from_dictionary_with_valid_string_select_correct_player(self):
-        arg = []
-        arg.append("""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 2,"selected" : 7}}""")
+        arg = ["""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 2,"selected" : 7}}"""]
         initial_state = Game().parse_state_from_args(arg)
         game_state = State()
         game_state.from_dictionary(initial_state)
         self.assertEqual(game_state.game_turn.player_one_active, False)
 
     def test_from_dictionary_with_valid_string_select_correct_piece_to_play(self):
-        arg = []
-        arg.append("""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 2,"selected" : 7}}""")
+        arg = ["""--state={"grid" : {"A2": 10,"C1":3,"D1":12},"turn" :{"player" : 2,"selected" : 7}}"""]
         initial_state = Game().parse_state_from_args(arg)
         game_state = State()
         game_state.from_dictionary(initial_state)

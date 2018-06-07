@@ -21,12 +21,13 @@ class State:
                 self.place_piece(key, val)
 
             self.game_turn.player_one_active = initial_state_dictionary["turn"]["player"] == 1
-            selected_piece = initial_state_dictionary["turn"]["selected"]
-            if self.remaining_pieces.count(selected_piece) == 1:
-                self.game_turn.selected_piece = selected_piece
-            else:
-                raise ValueError
-        except (ValueError, TypeError):
+            if "selected" in initial_state_dictionary["turn"]:
+                selected_piece = initial_state_dictionary["turn"]["selected"]
+                if self.remaining_pieces.count(selected_piece) == 1:
+                    self.game_turn.selected_piece = selected_piece
+                else:
+                    raise ValueError
+        except (ValueError, TypeError, KeyError):
             self.message = "[The state to load is not valid] : Ignored"
             self.grid = self.init_grid()
             self.remaining_pieces = self.init_remaining_pieces()
@@ -40,6 +41,7 @@ class State:
                 raise ValueError('This position is already occupied on the grid')
             self.grid[y][x] = piece_id
             self.remaining_pieces.remove(piece_id)
+            self.game_turn.selected_piece = 0
         else:
             raise ValueError('Unvalid piece id')
 
@@ -98,3 +100,6 @@ class State:
         elif Piece.check_line_winning(self.grid[0][3], self.grid[1][2], self.grid[2][1], self.grid[3][0]):
             return True
         return False
+
+    def is_selected_piece(self):
+        return self.game_turn.selected_piece > 0
