@@ -118,7 +118,6 @@ class UIRender:
 
     def clear_terminal(self):
         subprocess.call(["printf", "'\033c'"])
-        os.system('cls' if os.name == 'nt' else 'clear')
 
     def display_game(self, game_state):
         self.clear_terminal()
