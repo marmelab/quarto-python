@@ -79,8 +79,6 @@ class UIRender:
 
             if pieces[0].light_color:
                 piece_display = "\033[47m" + piece_display
-            else:
-                piece_display = "\033[100m" + piece_display
 
         return ' ' + piece_display + " \033[0m"
 
@@ -108,7 +106,6 @@ class UIRender:
                 if piece_id >= 10:
                     display_string += ' '
                 display_string += ' .  '
-            display_string += ' '
         display_string += '\n'
 
         for piece_id in range(1, PIECES_NUMBER + 1):
@@ -119,7 +116,7 @@ class UIRender:
                 if piece_id >= 10:
                     display_string += ' '
                 display_string += '   '
-            display_string += '  '
+            display_string += ' '
         return display_string
 
     def selected_piece_to_string(self, piece_number, game_turn):

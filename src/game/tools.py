@@ -7,8 +7,8 @@ class Players:
 
     """Definition of the users names:"""
 
-    player1_name = "Sasha"
-    player2_name = "Regis"
+    player1_name = "Player 1"
+    player2_name = "Player 2"
 
 
 def get_coordinates(position):
