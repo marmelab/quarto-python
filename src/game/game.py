@@ -5,7 +5,8 @@ import os
 from .piece import Piece
 from .turn import Turn
 from .state import State
-from .tools import GRID_SIZE, PIECES_NUMBER, Players
+from .tools import GRID_SIZE, PIECES_NUMBER
+from .players import Players
 from .ui import UIRender
 
 

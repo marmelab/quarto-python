@@ -1,6 +1,7 @@
 from .turn import Turn
 from .piece import Piece
-from .tools import GRID_SIZE, PIECES_NUMBER, EMPTY_POSITION, get_coordinates, Players
+from .tools import GRID_SIZE, PIECES_NUMBER, EMPTY_POSITION, get_coordinates
+from .players import Players
 
 
 class State:

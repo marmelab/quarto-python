@@ -1,7 +1,7 @@
 import unittest
 from ..turn import Turn
 from ..ui import UIRender
-from ..tools import Players
+from ..players import Players
 
 
 class TestPlayersMethods(unittest.TestCase):

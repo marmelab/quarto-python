@@ -42,7 +42,7 @@ class UIRender:
 
     def prompt_player_name(self, player_id, default_name):
         try:
-            name = input("Player " + str(player_id) + ", what is your name (" + default_name + " if empty) ? ")
+            name = input("Player " + str(player_id) + ", what is your name (" + default_name + " if empty) ? ").strip()
             if len(name) > 0:
                 return name
             return default_name
@@ -52,7 +52,7 @@ class UIRender:
 
     def prompt_restart(self):
         try:
-            return input("Let's play again ? (o/n) ") == 'o'
+            return input("Let's play again ? (y/n) ") == 'y'
         except KeyboardInterrupt:
             print("\nGame aborted")
             exit()
