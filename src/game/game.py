@@ -16,10 +16,11 @@ class Game:
     def start(self):
         game_state = State()
         ui = UIRender()
+        players = Players()
 
         ui.clear_terminal()
-        Players.player1_name = ui.prompt_player_name(1, Players.player1_name)
-        Players.player2_name = ui.prompt_player_name(2, Players.player2_name)
+        players.change_player_name(1, ui.prompt_player_name(1, players.player1_name))
+        players.change_player_name(2, ui.prompt_player_name(2, players.player2_name))
 
         initial_state = ""
         try:
@@ -39,14 +40,14 @@ class Game:
             while not game_state.check_draw():
                 if game_state.check_winner():
                     break
-                ui.display_game(game_state)
+                ui.display_game(game_state, players)
                 if not game_state.is_selected_piece():
-                    ui.prompt_piece_selection(game_state)
+                    ui.prompt_piece_selection(game_state, players)
                     game_state.switch_player()
-                    ui.display_game(game_state)
-                ui.prompt_piece_location(game_state)
+                    ui.display_game(game_state, players)
+                ui.prompt_piece_location(game_state, players)
 
-            ui.display_game(game_state)
+            ui.display_game(game_state, players)
             replay = ui.prompt_restart()
 
             if replay:

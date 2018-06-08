@@ -6,14 +6,14 @@ import os
 from .piece import pieces_list_definition
 from .turn import Turn
 from .state import State
-from .tools import GRID_SIZE, PIECES_NUMBER, Players
+from .tools import GRID_SIZE, PIECES_NUMBER
 
 
 class UIRender:
 
     """Definition of the user interface and the interactions:"""
 
-    def prompt_piece_selection(self, game_state):
+    def prompt_piece_selection(self, game_state, players):
         while True:
             try:
                 piece = int(input("Choose the next piece of the opponent : "))
@@ -22,12 +22,12 @@ class UIRender:
                 game_state.message = "You must choose a number available in the list"
             except ValueError:
                 game_state.message = "You have to type number between 1 and " + str(PIECES_NUMBER)
-                self.display_game(game_state)
+                self.display_game(game_state, players)
             except KeyboardInterrupt:
                 print("\nGame aborted")
                 exit()
 
-    def prompt_piece_location(self, game_state):
+    def prompt_piece_location(self, game_state, players):
         while True:
             try:
                 position = input("Choose the position to place your piece : ")
@@ -35,7 +35,7 @@ class UIRender:
                 return
             except ValueError:
                 game_state.message = "You have to type a free coordinate using  this format : 'A1'"
-                self.display_game(game_state)
+                self.display_game(game_state, players)
             except KeyboardInterrupt:
                 print("\nGame aborted")
                 exit()
@@ -124,9 +124,9 @@ class UIRender:
             return "[" + str(piece_number) + "]"
         return " " + str(piece_number) + " "
 
-    def players_to_string(self, game_turn):
-        player_1 = self.selected_player_to_string(Players.player1_name, game_turn.player_one_active)
-        player_2 = self.selected_player_to_string(Players.player2_name, not game_turn.player_one_active)
+    def players_to_string(self, game_turn, players):
+        player_1 = self.selected_player_to_string(players.player1_name, game_turn.player_one_active)
+        player_2 = self.selected_player_to_string(players.player2_name, not game_turn.player_one_active)
         return player_1 + "     " + player_2
 
     def selected_player_to_string(self, player_name, selected):
@@ -137,7 +137,7 @@ class UIRender:
     def clear_terminal(self):
         subprocess.call(["printf", "'\033c'"])
 
-    def display_game(self, game_state):
+    def display_game(self, game_state, players):
         self.clear_terminal()
         print()
         print("\033[32;1mWelcome to Quarto-Py\033[0m")
@@ -145,7 +145,7 @@ class UIRender:
         print()
         print(self.grid_to_string(game_state.grid))
         print()
-        print(self.players_to_string(game_state.game_turn))
+        print(self.players_to_string(game_state.game_turn, players))
         print()
         print(self.pieces_to_string(game_state.remaining_pieces, game_state.game_turn))
         print()

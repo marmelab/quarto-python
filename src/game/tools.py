@@ -10,6 +10,12 @@ class Players:
     player1_name = "Player 1"
     player2_name = "Player 2"
 
+    def change_player_name(self, player_id, player_name):
+        if player_id == 1:
+            self.player1_name = player_name
+        if player_id == 2:
+            self.player2_name = player_name
+
 
 def get_coordinates(position):
     """Convert a postion of format 'A3' into coordinates x= 0 and y = 2 in the grid"""
