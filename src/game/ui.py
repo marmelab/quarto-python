@@ -88,6 +88,8 @@ class UIRender:
                 if piece_id >= 10:
                     display_string += ' '
             else:
+                if piece_id >= 10:
+                    display_string += ' '
                 display_string += ' .  '
             display_string += ' '
         display_string += '\n'
@@ -97,6 +99,8 @@ class UIRender:
             if remaining_pieces.count(piece_id):
                 display_string += self.selected_piece_to_string(piece_id, game_turn)
             else:
+                if piece_id >= 10:
+                    display_string += ' '
                 display_string += '   '
             display_string += '  '
         return display_string
@@ -113,8 +117,8 @@ class UIRender:
 
     def selected_player_to_string(self, player_name, selected):
         if selected:
-            player_name = "=> " + player_name + " <="
-        return player_name
+            return "=> " + player_name + " <="
+        return "   " + player_name + "   "
 
     def clear_terminal(self):
         subprocess.call(["printf", "'\033c'"])
