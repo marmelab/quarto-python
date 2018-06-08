@@ -6,7 +6,7 @@ import os
 from .piece import pieces_list_definition
 from .turn import Turn
 from .state import State
-from .tools import GRID_SIZE, PIECES_NUMBER
+from .tools import GRID_SIZE, PIECES_NUMBER, Players
 
 
 class UIRender:
@@ -39,6 +39,23 @@ class UIRender:
             except KeyboardInterrupt:
                 print("\nGame aborted")
                 exit()
+
+    def prompt_player_name(self, player_id, default_name):
+        try:
+            name = input("Player " + str(player_id) + ", what is your name (" + default_name + " if empty) ? ")
+            if len(name) > 0:
+                return name
+            return default_name
+        except KeyboardInterrupt:
+            print("\nGame aborted")
+            exit()
+
+    def prompt_restart(self):
+        try:
+            return input("Let's play another party ? (o/n) ") == 'o'
+        except KeyboardInterrupt:
+            print("\nGame aborted")
+            exit()
 
     def piece_to_string(self, piece_id):
         piece_display = str(piece_id)
@@ -111,8 +128,8 @@ class UIRender:
         return " " + str(piece_number) + " "
 
     def players_to_string(self, game_turn):
-        player_1 = self.selected_player_to_string('Player 1', game_turn.player_one_active)
-        player_2 = self.selected_player_to_string('Player 2', not game_turn.player_one_active)
+        player_1 = self.selected_player_to_string(Players.player1_name, game_turn.player_one_active)
+        player_2 = self.selected_player_to_string(Players.player2_name, not game_turn.player_one_active)
         return player_1 + "     " + player_2
 
     def selected_player_to_string(self, player_name, selected):

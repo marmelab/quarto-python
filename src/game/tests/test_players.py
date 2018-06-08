@@ -1,6 +1,7 @@
 import unittest
 from ..turn import Turn
 from ..ui import UIRender
+from ..tools import Players
 
 
 class TestPlayersMethods(unittest.TestCase):
@@ -16,7 +17,7 @@ class TestPlayersMethods(unittest.TestCase):
     def test_players_to_string_should_create_the_reference_string(self):
         game_turn = Turn()
         players_display = UIRender().players_to_string(game_turn)
-        reference_string = "=> Player 1 <=        Player 2   "
+        reference_string = "=> " + Players.player1_name + " <=        " + Players.player2_name + "   "
         self.assertEqual(players_display, reference_string)
 
 

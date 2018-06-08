@@ -3,6 +3,14 @@ PIECES_NUMBER = 16
 EMPTY_POSITION = '.'
 
 
+class Players:
+
+    """Definition of the users names:"""
+
+    player1_name = "Sasha"
+    player2_name = "Regis"
+
+
 def get_coordinates(position):
     """Convert a postion of format 'A3' into coordinates x= 0 and y = 2 in the grid"""
     if len(position) != 2:
