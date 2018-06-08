@@ -1,5 +1,5 @@
 class Players:
-    
+
     """Definition of the users names:"""
 
     def __init__(self, initial_state=""):
@@ -11,4 +11,3 @@ class Players:
             self.player1_name = player_name
         if player_id == 2:
             self.player2_name = player_name
-

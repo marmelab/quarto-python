@@ -1,6 +1,7 @@
 import unittest
 from ..state import State
-from ..tools import GRID_SIZE, EMPTY_POSITION, Players
+from ..tools import GRID_SIZE, EMPTY_POSITION
+from ..players import Players
 from ..game import Game
 from ..ui import UIRender
 from ..piece import Piece
