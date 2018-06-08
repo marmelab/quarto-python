@@ -72,7 +72,7 @@ class State:
                 player_name = players.player1_name
             else:
                 player_name = players.player2_name
-            self.message = player_name + " WINNNNS !!!!!!\n"
+            self.message = player_name + " WINNNNS !!!!!! (with a score of " + str(len(self.remaining_pieces)) + ")\n"
             return True
         return False
 
