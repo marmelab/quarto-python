@@ -66,12 +66,12 @@ class State:
     def switch_player(self):
         self.game_turn.player_one_active = not self.game_turn.player_one_active
 
-    def check_winner(self):
+    def check_winner(self, players):
         if self.check_raws_winning() or self.check_columns_winning() or self.check_diags_winning():
             if self.game_turn.player_one_active:
-                player_name = Players.player1_name
+                player_name = players.player1_name
             else:
-                player_name = Players.player2_name
+                player_name = players.player2_name
             self.message = player_name + " WINNNNS !!!!!!\n"
             return True
         return False

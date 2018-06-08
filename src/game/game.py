@@ -38,7 +38,7 @@ class Game:
         while replay:
 
             while not game_state.check_draw():
-                if game_state.check_winner():
+                if game_state.check_winner(players):
                     break
                 ui.display_game(game_state, players)
                 if not game_state.is_selected_piece():

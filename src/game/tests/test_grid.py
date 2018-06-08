@@ -1,6 +1,6 @@
 import unittest
 from ..state import State
-from ..tools import GRID_SIZE, EMPTY_POSITION
+from ..tools import GRID_SIZE, EMPTY_POSITION, Players
 from ..game import Game
 from ..ui import UIRender
 from ..piece import Piece
@@ -131,7 +131,7 @@ class TestGridMethods(unittest.TestCase):
         "D4":4},"turn" :{"player" : 1}}"""]
         initial_state = Game().parse_state_from_args(arg)
         game_state.import_state_from_dictionary(initial_state)
-        self.assertTrue(game_state.check_winner())
+        self.assertTrue(game_state.check_winner(Players()))
 
     def test_place_piece_is_placed_at_good_position(self):
         game_state = State()
