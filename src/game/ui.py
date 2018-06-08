@@ -52,7 +52,7 @@ class UIRender:
 
     def prompt_restart(self):
         try:
-            return input("Let's play another party ? (o/n) ") == 'o'
+            return input("Let's play again ? (o/n) ") == 'o'
         except KeyboardInterrupt:
             print("\nGame aborted")
             exit()
