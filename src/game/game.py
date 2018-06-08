@@ -49,10 +49,8 @@ class Game:
             opts, args = getopt.getopt(argv, "", ["state="])
             for opt, arg in opts:
                 if opt == "--state":
-                    parameter = arg
-                    parameter = json.loads(parameter)
+                    parameter = json.loads(arg)
         except (getopt.GetoptError, json.decoder.JSONDecodeError, json.JSONDecodeError):
-            parameter = ""
             raise ValueError("[The state to load is not wellformed] : Ignored")
 
         return parameter
