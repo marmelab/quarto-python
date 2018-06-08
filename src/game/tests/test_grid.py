@@ -3,6 +3,7 @@ from ..state import State
 from ..tools import GRID_SIZE, EMPTY_POSITION
 from ..game import Game
 from ..ui import UIRender
+from ..piece import Piece
 
 
 class TestGridMethods(unittest.TestCase):
@@ -27,11 +28,11 @@ class TestGridMethods(unittest.TestCase):
     def test_grid_to_string_should_create_the_reference_string(self):
         grid = State().init_grid()
         grid_display = UIRender().grid_to_string(grid)
-        reference_display = """    A   B   C   D
- 1  .   .   .   .  
- 2  .   .   .   .  
- 3  .   .   .   .  
- 4  .   .   .   .  
+        reference_display = """    A    B    C    D
+ 1  . \x1b[0m   . \x1b[0m   . \x1b[0m   . \x1b[0m  
+ 2  . \x1b[0m   . \x1b[0m   . \x1b[0m   . \x1b[0m  
+ 3  . \x1b[0m   . \x1b[0m   . \x1b[0m   . \x1b[0m  
+ 4  . \x1b[0m   . \x1b[0m   . \x1b[0m   . \x1b[0m  
 """  # noqa
         self.assertEqual(grid_display, reference_display)
 

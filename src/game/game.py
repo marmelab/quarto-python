@@ -14,7 +14,6 @@ class Game:
     """Definition of the user interface and the interactions:"""
 
     def start(self):
-        pieces_list = Piece.create_pieces_list()
         game_state = State()
 
         initial_state = ""
@@ -45,15 +44,13 @@ class Game:
     def parse_state_from_args(self, argv):
         if 'quarto.py' in argv[0]:
             argv.pop(0)
-
+        parameter = ""
         try:
             opts, args = getopt.getopt(argv, "", ["state="])
             for opt, arg in opts:
                 if opt == "--state":
-                    parameter = arg
-            parameter = json.loads(parameter)
-        except (getopt.GetoptError, UnboundLocalError, json.decoder.JSONDecodeError, json.JSONDecodeError):
-            parameter = ""
+                    parameter = json.loads(arg)
+        except (getopt.GetoptError, json.decoder.JSONDecodeError, json.JSONDecodeError):
             raise ValueError("[The state to load is not wellformed] : Ignored")
 
         return parameter
