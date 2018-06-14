@@ -57,6 +57,17 @@ class UIRender:
             print("\nGame aborted")
             exit()
 
+    def prompt_playing_mode(self):
+        
+        try:
+            players_count = input("How many players : (0, 1 or 2, default is 1) ")
+            if players_count in ['0','1','2']:
+                return int(players_count)
+            return 1
+        except KeyboardInterrupt:
+            print("\nGame aborted")
+            exit()
+
     def piece_to_string(self, piece_id):
         piece_display = str(piece_id)
         pieces = list(filter(lambda x: x.id == piece_id, pieces_list_definition))
