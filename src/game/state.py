@@ -1,6 +1,7 @@
 from .turn import Turn
 from .piece import Piece
 from .tools import GRID_SIZE, PIECES_NUMBER, EMPTY_POSITION, get_coordinates
+from .players import Players
 
 
 class State:
@@ -66,13 +67,13 @@ class State:
     def switch_player(self):
         self.game_turn.player_one_active = not self.game_turn.player_one_active
 
-    def check_winner(self):
+    def check_winner(self, players):
         if self.check_raws_winning() or self.check_columns_winning() or self.check_diags_winning():
             if self.game_turn.player_one_active:
-                player_name = "Player 1"
+                player_name = players.player1_name
             else:
-                player_name = "Player 2"
-            self.message = player_name + " WINNNNS !!!!!!\n"
+                player_name = players.player2_name
+            self.message = player_name + " WINNNNS !!!!!! (with a score of " + str(len(self.remaining_pieces)) + ")\n"
             return True
         return False
 

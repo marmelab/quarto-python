@@ -13,7 +13,7 @@ class UIRender:
 
     """Definition of the user interface and the interactions:"""
 
-    def prompt_piece_selection(self, game_state):
+    def prompt_piece_selection(self, game_state, players):
         while True:
             try:
                 piece = int(input("Choose the next piece of the opponent : "))
@@ -22,12 +22,12 @@ class UIRender:
                 game_state.message = "You must choose a number available in the list"
             except ValueError:
                 game_state.message = "You have to type number between 1 and " + str(PIECES_NUMBER)
-                self.display_game(game_state)
+                self.display_game(game_state, players)
             except KeyboardInterrupt:
                 print("\nGame aborted")
                 exit()
 
-    def prompt_piece_location(self, game_state):
+    def prompt_piece_location(self, game_state, players):
         while True:
             try:
                 position = input("Choose the position to place your piece : ")
@@ -35,10 +35,38 @@ class UIRender:
                 return
             except ValueError:
                 game_state.message = "You have to type a free coordinate using  this format : 'A1'"
-                self.display_game(game_state)
+                self.display_game(game_state, players)
             except KeyboardInterrupt:
                 print("\nGame aborted")
                 exit()
+
+    def prompt_player_name(self, player_id, default_name):
+        try:
+            name = input("Player " + str(player_id) + ", what is your name (" + default_name + " if empty) ? ").strip()
+            if len(name) > 0:
+                return name
+            return default_name
+        except KeyboardInterrupt:
+            print("\nGame aborted")
+            exit()
+
+    def prompt_restart(self):
+        try:
+            return input("Let's play again ? (y/n) ") == 'y'
+        except KeyboardInterrupt:
+            print("\nGame aborted")
+            exit()
+
+    def prompt_playing_mode(self):
+        
+        try:
+            players_count = input("How many players : (0, 1 or 2, default is 1) ")
+            if players_count in ['0','1','2']:
+                return int(players_count)
+            return 1
+        except KeyboardInterrupt:
+            print("\nGame aborted")
+            exit()
 
     def piece_to_string(self, piece_id):
         piece_display = str(piece_id)
@@ -62,8 +90,6 @@ class UIRender:
 
             if pieces[0].light_color:
                 piece_display = "\033[47m" + piece_display
-            else:
-                piece_display = "\033[100m" + piece_display
 
         return ' ' + piece_display + " \033[0m"
 
@@ -91,7 +117,6 @@ class UIRender:
                 if piece_id >= 10:
                     display_string += ' '
                 display_string += ' .  '
-            display_string += ' '
         display_string += '\n'
 
         for piece_id in range(1, PIECES_NUMBER + 1):
@@ -102,7 +127,7 @@ class UIRender:
                 if piece_id >= 10:
                     display_string += ' '
                 display_string += '   '
-            display_string += '  '
+            display_string += ' '
         return display_string
 
     def selected_piece_to_string(self, piece_number, game_turn):
@@ -110,9 +135,9 @@ class UIRender:
             return "[" + str(piece_number) + "]"
         return " " + str(piece_number) + " "
 
-    def players_to_string(self, game_turn):
-        player_1 = self.selected_player_to_string('Player 1', game_turn.player_one_active)
-        player_2 = self.selected_player_to_string('Player 2', not game_turn.player_one_active)
+    def players_to_string(self, game_turn, players):
+        player_1 = self.selected_player_to_string(players.player1_name, game_turn.player_one_active)
+        player_2 = self.selected_player_to_string(players.player2_name, not game_turn.player_one_active)
         return player_1 + "     " + player_2
 
     def selected_player_to_string(self, player_name, selected):
@@ -123,7 +148,7 @@ class UIRender:
     def clear_terminal(self):
         subprocess.call(["printf", "'\033c'"])
 
-    def display_game(self, game_state):
+    def display_game(self, game_state, players):
         self.clear_terminal()
         print()
         print("\033[32;1mWelcome to Quarto-Py\033[0m")
@@ -131,7 +156,7 @@ class UIRender:
         print()
         print(self.grid_to_string(game_state.grid))
         print()
-        print(self.players_to_string(game_state.game_turn))
+        print(self.players_to_string(game_state.game_turn, players))
         print()
         print(self.pieces_to_string(game_state.remaining_pieces, game_state.game_turn))
         print()
